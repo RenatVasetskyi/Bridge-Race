@@ -75,24 +75,24 @@ namespace Architecture.Services
 
         public void PlayMusic(MusicType musicType)
         {
-            MusicData musicData = GetMusicData(musicType);
-            _musicAudioSource.clip = musicData.Clip;
-            _musicAudioSource.Play();
+            // MusicData musicData = GetMusicData(musicType);
+            // _musicAudioSource.clip = musicData.Clip;
+            // _musicAudioSource.Play();
         }
 
         public void PlaySfx(SfxType sfxType)
         {
-            SfxData sfxData = GetSfxData(sfxType);
-            _sfxAudioSource.PlayOneShot(sfxData.Clip);
+            // SfxData sfxData = GetSfxData(sfxType);
+            // _sfxAudioSource.PlayOneShot(sfxData.Clip);
         }
 
         public void Initialize()
         {
-            InitializeSfxDataList();
-            InitializeMusicDataList();
-            InitializeSfxAudioSource();
-            InitializeMusicAudioSource();
-            Load();
+            // InitializeSfxDataList();
+            // InitializeMusicDataList();
+            // InitializeSfxAudioSource();
+            // InitializeMusicAudioSource();
+            // Load();
         }
 
         private void Save()
@@ -118,7 +118,7 @@ namespace Architecture.Services
 
         public void StopMusic()
         {
-            _musicAudioSource.Stop();
+            // _musicAudioSource.Stop();
         }
 
         private MusicData GetMusicData(MusicType musicType)
