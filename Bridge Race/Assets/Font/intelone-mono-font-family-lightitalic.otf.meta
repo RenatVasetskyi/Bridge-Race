@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 340466176f85d7544a94d8ae0b9ddb0d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - IntelOne Mono
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a38faf688422feb4f817e89e9ccf9364, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

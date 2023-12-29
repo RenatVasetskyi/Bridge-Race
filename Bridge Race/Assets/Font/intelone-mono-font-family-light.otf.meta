@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 48168232df372fb4aa6f578cf9ce4f7c
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - IntelOne Mono
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 340466176f85d7544a94d8ae0b9ddb0d, type: 3}
+  - {fileID: 12800000, guid: e659db01692cf8a4aa8e6244386ff93b, type: 3}
+  - {fileID: 12800000, guid: 5502c87973cab3f46bf95c6db825b361, type: 3}
+  - {fileID: 12800000, guid: a38faf688422feb4f817e89e9ccf9364, type: 3}
+  - {fileID: 12800000, guid: 36038d5fa70aac54a8546e2dfadd6ed9, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
