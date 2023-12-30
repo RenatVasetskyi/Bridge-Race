@@ -39,3 +39,5 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   Levels:
   - {fileID: 4502392026046009489, guid: 914c58434c1acda459012781a037f967, type: 3}
+  PlayerData:
+    Speed: 7
