@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using Game.Input.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IInputController
 {
+    public event Action OnInputActivated;
+    public event Action OnInputDeactivated;
+    
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
@@ -60,6 +63,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        
+        OnInputActivated?.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -133,6 +138,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         input = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
+        
+        OnInputDeactivated?.Invoke();
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)

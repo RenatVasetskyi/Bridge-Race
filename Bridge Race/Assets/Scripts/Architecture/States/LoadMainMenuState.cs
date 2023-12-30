@@ -1,6 +1,8 @@
 using Architecture.Services.Interfaces;
 using Architecture.States.Interfaces;
 using Audio;
+using Data;
+using UnityEngine;
 
 namespace Architecture.States
 {
@@ -10,11 +12,14 @@ namespace Architecture.States
         
         private readonly ISceneLoader _sceneLoader;
         private readonly IAudioService _audioService;
+        private readonly IBaseFactory _baseFactory;
 
-        public LoadMainMenuState(ISceneLoader sceneLoader, IAudioService audioService)
+        public LoadMainMenuState(ISceneLoader sceneLoader, IAudioService audioService, 
+            IBaseFactory baseFactory)
         {
             _sceneLoader = sceneLoader;
             _audioService = audioService;
+            _baseFactory = baseFactory;
         }
         
         public void Exit()
@@ -29,6 +34,13 @@ namespace Architecture.States
 
         private void Initialize()
         {
+            Transform parent = _baseFactory.CreateBaseWithObject<Transform>(AssetPath.BaseParent);
+            
+            Camera camera = _baseFactory.CreateBaseWithContainer<Camera>(AssetPath.BaseCamera, parent);
+            
+            Canvas mainMenu = _baseFactory.CreateBaseWithContainer<Canvas>(AssetPath.MainMenu, parent);
+            mainMenu.worldCamera = camera;
+            
             _audioService.PlayMusic(MusicType.MainMenu);
         }
     }
