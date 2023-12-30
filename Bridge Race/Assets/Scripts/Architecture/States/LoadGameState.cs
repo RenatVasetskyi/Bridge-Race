@@ -3,8 +3,10 @@ using Architecture.States.Interfaces;
 using Audio;
 using Data;
 using Game.Character;
+using Game.Levels;
 using UI.Game;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Architecture.States
 {
@@ -18,10 +20,12 @@ namespace Architecture.States
         private readonly IBaseFactory _baseFactory;
         private readonly IAssetProvider _assetProvider;
         private readonly GameSettings _gameSettings;
+        private readonly ILevelProgressService _levelProgressService;
 
         public LoadGameState(ISceneLoader sceneLoader, IGamePauser gamePauser,
             IAudioService audioService, IBaseFactory baseFactory, 
-            IAssetProvider assetProvider, GameSettings gameSettings)
+            IAssetProvider assetProvider, GameSettings gameSettings, 
+            ILevelProgressService levelProgressService)
         {
             _sceneLoader = sceneLoader;
             _gamePauser = gamePauser;
@@ -29,6 +33,7 @@ namespace Architecture.States
             _baseFactory = baseFactory;
             _assetProvider = assetProvider;
             _gameSettings = gameSettings;
+            _levelProgressService = levelProgressService;
         }
         
         public void Exit()
@@ -58,8 +63,12 @@ namespace Architecture.States
                 (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
             gameView.GetComponent<Canvas>().worldCamera = camera;
             
+            Level level = (await _baseFactory.CreateAddressableWithContainer
+                (_levelProgressService.GetCurrentLevelToPass().Prefab, Vector3.zero, Quaternion.identity, parent)).GetComponent<Level>();
+            
             Player player = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.Player, Vector3.zero, Quaternion.identity, parent)).GetComponent<Player>();
+                (_gameSettings.Player, level.PlayerSpawnPoint.position, Quaternion.identity, parent))
+                .GetComponent<Player>();
             player.Initialize(gameView.Joystick);
 
             _audioService.PlayMusic(MusicType.Game);

@@ -1,3 +1,4 @@
+using Game.Levels;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -13,6 +14,6 @@ namespace Data
         public AssetReferenceGameObject BaseParent;
         public AssetReferenceGameObject Player;
         public AssetReferenceGameObject BaseCamera;
-        public AssetReferenceGameObject[] Levels;
+        public Level[] Levels;
     }
 }

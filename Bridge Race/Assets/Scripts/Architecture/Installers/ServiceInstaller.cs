@@ -21,6 +21,15 @@ namespace Architecture.Installers
             BindAudioService();
             BindCurrencyService();
             BindGamePauser();
+            BindLevelProgressService();
+        }
+        
+        private void BindLevelProgressService()
+        {
+            Container
+                .Bind<ILevelProgressService>()
+                .To<LevelProgressService>()
+                .AsSingle();
         }
         
         private void BindGamePauser()

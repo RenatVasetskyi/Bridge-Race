@@ -1,4 +1,7 @@
-﻿namespace Architecture.Services.Interfaces
+﻿using Game.Levels;
+using Game.Levels.Enums;
+
+namespace Architecture.Services.Interfaces
 {
     public interface ILevelProgressService
     {
