@@ -37,6 +37,11 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  UICamera:
+    m_AssetGUID: 43b51ff09dc396f439e8a480e02880e0
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Levels:
   - {fileID: 4502392026046009489, guid: 914c58434c1acda459012781a037f967, type: 3}
   PlayerData:

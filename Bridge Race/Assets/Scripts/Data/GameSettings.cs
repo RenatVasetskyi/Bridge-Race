@@ -15,6 +15,7 @@ namespace Data
         public AssetReferenceGameObject BaseParent;
         public AssetReferenceGameObject Player;
         public AssetReferenceGameObject BaseCamera;
+        public AssetReferenceGameObject UICamera;
         public Level[] Levels;
 
         [Header("Player")]
