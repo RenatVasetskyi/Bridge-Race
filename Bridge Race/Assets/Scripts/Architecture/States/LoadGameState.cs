@@ -2,6 +2,7 @@ using Architecture.Services.Interfaces;
 using Architecture.States.Interfaces;
 using Audio;
 using Data;
+using Game.Character;
 using UI.Game;
 using UnityEngine;
 
@@ -46,6 +47,9 @@ namespace Architecture.States
             
             GameView gameView = _baseFactory.CreateBaseWithContainer<GameView>(AssetPath.GameView, parent);
             gameView.GetComponent<Canvas>().worldCamera = camera;
+
+            Player player = _baseFactory.CreateBaseWithContainer<Player>(AssetPath.Player, parent);
+            player.Initialize(gameView.Joystick);
             
             _audioService.PlayMusic(MusicType.Game);
         }

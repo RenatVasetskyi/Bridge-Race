@@ -10,5 +10,6 @@ namespace Data
         public const string BaseCamera = "Prefabs/BaseCamera";
         public const string BaseParent = "Prefabs/BaseParent";
         public const string GameView = "Prefabs/UI/Game/GameView";
+        public const string Player = "Prefabs/Game/Characters/Character1/Player";
     }
 }
