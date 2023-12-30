@@ -16,18 +16,25 @@ namespace Architecture.States
         private readonly IGamePauser _gamePauser;
         private readonly IAudioService _audioService;
         private readonly IBaseFactory _baseFactory;
+        private readonly IAssetProvider _assetProvider;
+        private readonly GameSettings _gameSettings;
 
         public LoadGameState(ISceneLoader sceneLoader, IGamePauser gamePauser,
-            IAudioService audioService, IBaseFactory baseFactory)
+            IAudioService audioService, IBaseFactory baseFactory, 
+            IAssetProvider assetProvider, GameSettings gameSettings)
         {
             _sceneLoader = sceneLoader;
             _gamePauser = gamePauser;
             _audioService = audioService;
             _baseFactory = baseFactory;
+            _assetProvider = assetProvider;
+            _gameSettings = gameSettings;
         }
         
         public void Exit()
         {
+            _assetProvider.CleanUp();
+            
             _audioService.StopMusic();
         }
 
@@ -36,7 +43,7 @@ namespace Architecture.States
             _sceneLoader.Load(GameScene, Initialize);
         }
 
-        private void Initialize()
+        private async void Initialize()
         {
             _gamePauser.Clear();
             _gamePauser.SetPause(false);
@@ -45,12 +52,14 @@ namespace Architecture.States
             
             Camera camera = _baseFactory.CreateBaseWithContainer<Camera>(AssetPath.BaseCamera, parent);
             
-            GameView gameView = _baseFactory.CreateBaseWithContainer<GameView>(AssetPath.GameView, parent);
-            gameView.GetComponent<Canvas>().worldCamera = camera;
+            GameObject createdGameView = await _baseFactory.CreateAddressableWithContainer(_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent);
+            createdGameView.GetComponent<Canvas>().worldCamera = camera;
+            
+            GameView gameViewComponent = createdGameView.GetComponent<GameView>();
 
             Player player = _baseFactory.CreateBaseWithContainer<Player>(AssetPath.Player, parent);
-            player.Initialize(gameView.Joystick);
-            
+            player.Initialize(gameViewComponent.Joystick);
+
             _audioService.PlayMusic(MusicType.Game);
         }
     }

@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using Architecture.Services.Interfaces;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Architecture.Services
@@ -49,6 +51,14 @@ namespace Architecture.Services
         public GameObject CreateBaseWithContainer(string path, Transform parent)
         {
             return _container.InstantiatePrefab(_assetProvider.Initialize<GameObject>(path), parent);
+        }
+        
+        public async Task<GameObject> CreateAddressableWithContainer
+            (AssetReferenceGameObject assetReference, Vector3 at, Quaternion rotation, Transform parent)
+        {
+            GameObject loadedResource = await _assetProvider.Load<GameObject>(assetReference);
+            
+            return _container.InstantiatePrefab(loadedResource, at, rotation, parent);
         }
     }
 }
