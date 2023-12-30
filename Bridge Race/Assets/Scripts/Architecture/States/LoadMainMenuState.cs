@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Architecture.Services.Interfaces;
 using Architecture.States.Interfaces;
 using Audio;
@@ -42,13 +41,15 @@ namespace Architecture.States
 
         private async void Initialize()
         {
-            Transform parent = _baseFactory.CreateBaseWithObject<Transform>(AssetPath.BaseParent);
+            Transform parent = (await _baseFactory.CreateAddressableWithObject
+                (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
+
+            Camera camera = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.BaseCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
-            Camera camera = _baseFactory.CreateBaseWithContainer<Camera>(AssetPath.BaseCamera, parent);
-            
-            GameObject mainMenu = await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.MainMenu, Vector3.zero, Quaternion.identity, parent);
-            mainMenu.GetComponent<Canvas>().worldCamera = camera;
+            Canvas mainMenu = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.MainMenu, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();
+            mainMenu.worldCamera = camera;
             
             _audioService.PlayMusic(MusicType.MainMenu);
         }

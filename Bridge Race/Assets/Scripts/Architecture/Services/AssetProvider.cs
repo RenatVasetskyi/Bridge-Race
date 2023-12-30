@@ -20,7 +20,10 @@ namespace Architecture.Services
         public async Task<T> Load<T>(AssetReferenceGameObject assetReference) where T : Object
         {
             if (_resourceCache.TryGetValue(assetReference.AssetGUID, out AsyncOperationHandle completedHandle))
-                return completedHandle.Result as T;
+            {
+                if (completedHandle.IsValid())
+                    return completedHandle.Result as T;       
+            }
             
             AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(assetReference);
 

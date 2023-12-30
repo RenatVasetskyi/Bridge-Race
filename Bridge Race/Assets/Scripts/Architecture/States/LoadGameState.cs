@@ -48,17 +48,19 @@ namespace Architecture.States
             _gamePauser.Clear();
             _gamePauser.SetPause(false);
             
-            Transform parent = _baseFactory.CreateBaseWithObject<Transform>(AssetPath.BaseParent);
-            
-            Camera camera = _baseFactory.CreateBaseWithContainer<Camera>(AssetPath.BaseCamera, parent);
-            
-            GameObject createdGameView = await _baseFactory.CreateAddressableWithContainer(_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent);
-            createdGameView.GetComponent<Canvas>().worldCamera = camera;
-            
-            GameView gameViewComponent = createdGameView.GetComponent<GameView>();
+            Transform parent = (await _baseFactory.CreateAddressableWithObject
+                (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
-            Player player = _baseFactory.CreateBaseWithContainer<Player>(AssetPath.Player, parent);
-            player.Initialize(gameViewComponent.Joystick);
+            Camera camera = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.BaseCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+            
+            GameView gameView = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
+            gameView.GetComponent<Canvas>().worldCamera = camera;
+            
+            Player player = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.Player, Vector3.zero, Quaternion.identity, parent)).GetComponent<Player>();
+            player.Initialize(gameView.Joystick);
 
             _audioService.PlayMusic(MusicType.Game);
         }

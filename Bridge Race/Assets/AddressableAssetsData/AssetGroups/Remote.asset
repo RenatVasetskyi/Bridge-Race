@@ -33,6 +33,18 @@ MonoBehaviour:
     m_Address: MainMenuWindow
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 50c549939b9529d49b9eae59fc1d0fd3
+    m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 63d34f67f5ea287458cec889cd2f99f7
+    m_Address: BaseCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f1de5459c8de25248a30a4c795bd040b
+    m_Address: BaseParent
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:

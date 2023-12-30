@@ -57,8 +57,16 @@ namespace Architecture.Services
             (AssetReferenceGameObject assetReference, Vector3 at, Quaternion rotation, Transform parent)
         {
             GameObject loadedResource = await _assetProvider.Load<GameObject>(assetReference);
-            
+
             return _container.InstantiatePrefab(loadedResource, at, rotation, parent);
+        }
+
+        public async Task<GameObject> CreateAddressableWithObject(AssetReferenceGameObject assetReference, Vector3 at, Quaternion rotation,
+            Transform parent)
+        {
+            GameObject loadedResource = await _assetProvider.Load<GameObject>(assetReference);
+            
+            return Object.Instantiate(loadedResource, at, rotation, parent);
         }
     }
 }

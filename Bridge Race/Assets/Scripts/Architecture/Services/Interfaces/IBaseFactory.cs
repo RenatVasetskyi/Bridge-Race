@@ -15,5 +15,8 @@ namespace Architecture.Services.Interfaces
         GameObject CreateBaseWithContainer(string path, Transform parent);
         Task<GameObject> CreateAddressableWithContainer
             (AssetReferenceGameObject assetReference, Vector3 at, Quaternion rotation, Transform parent);
+        Task<GameObject> CreateAddressableWithObject(AssetReferenceGameObject assetReference, Vector3 at,
+            Quaternion rotation,
+            Transform parent);
     }
 }

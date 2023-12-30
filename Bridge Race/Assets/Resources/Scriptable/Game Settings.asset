@@ -22,3 +22,18 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  BaseParent:
+    m_AssetGUID: f1de5459c8de25248a30a4c795bd040b
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  Player:
+    m_AssetGUID: 50c549939b9529d49b9eae59fc1d0fd3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  BaseCamera:
+    m_AssetGUID: 63d34f67f5ea287458cec889cd2f99f7
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

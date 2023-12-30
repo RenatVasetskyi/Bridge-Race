@@ -8,5 +8,8 @@ namespace Data
     {
         public AssetReferenceGameObject MainMenu;
         public AssetReferenceGameObject GameView;
+        public AssetReferenceGameObject BaseParent;
+        public AssetReferenceGameObject Player;
+        public AssetReferenceGameObject BaseCamera;
     }
 }
