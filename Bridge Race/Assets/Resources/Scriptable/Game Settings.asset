@@ -42,7 +42,12 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  GameCamera:
+    m_AssetGUID: 6797887f4d63cbb4ca653a0f674df8ec
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Levels:
   - {fileID: 4502392026046009489, guid: 914c58434c1acda459012781a037f967, type: 3}
   PlayerData:
-    Speed: 7
+    Speed: 12

@@ -53,6 +53,10 @@ MonoBehaviour:
     m_Address: UICamera
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6797887f4d63cbb4ca653a0f674df8ec
+    m_Address: GameCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:

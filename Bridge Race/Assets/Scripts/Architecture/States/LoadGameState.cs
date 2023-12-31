@@ -2,6 +2,7 @@ using Architecture.Services.Interfaces;
 using Architecture.States.Interfaces;
 using Audio;
 using Data;
+using Game.Camera;
 using Game.Character;
 using Game.Levels;
 using UI.Game;
@@ -57,7 +58,7 @@ namespace Architecture.States
                 (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
             Camera camera = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.BaseCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+                (_gameSettings.GameCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             GameView gameView = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
@@ -70,6 +71,9 @@ namespace Architecture.States
                 (_gameSettings.Player, level.PlayerSpawnPoint.position, Quaternion.identity, parent))
                 .GetComponent<Player>();
             player.Initialize(gameView.Joystick);
+            
+            CameraFollowTarget cameraFollowTarget = camera.GetComponent<CameraFollowTarget>();
+            cameraFollowTarget.Initialize(player.transform);
 
             _audioService.PlayMusic(MusicType.Game);
         }
