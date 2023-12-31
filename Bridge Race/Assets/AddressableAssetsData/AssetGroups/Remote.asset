@@ -57,6 +57,10 @@ MonoBehaviour:
     m_Address: GameCamera
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 3b6a037ecc374724380935d001c4ecd0
+    m_Address: Tutorial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:

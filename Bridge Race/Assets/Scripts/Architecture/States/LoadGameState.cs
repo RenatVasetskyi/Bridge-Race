@@ -57,12 +57,15 @@ namespace Architecture.States
             Transform parent = (await _baseFactory.CreateAddressableWithObject
                 (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
-            Camera camera = (await _baseFactory.CreateAddressableWithContainer
+            Camera gameCamera = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.GameCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+            
+            Camera uiCamera = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.UICamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             GameView gameView = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
-            gameView.GetComponent<Canvas>().worldCamera = camera;
+            gameView.GetComponent<Canvas>().worldCamera = uiCamera;
             
             Level level = (await _baseFactory.CreateAddressableWithContainer
                 (_levelProgressService.GetCurrentLevelToPass().Prefab, Vector3.zero, Quaternion.identity, parent)).GetComponent<Level>();
@@ -72,7 +75,7 @@ namespace Architecture.States
                 .GetComponent<Player>();
             player.Initialize(gameView.Joystick);
             
-            CameraFollowTarget cameraFollowTarget = camera.GetComponent<CameraFollowTarget>();
+            CameraFollowTarget cameraFollowTarget = gameCamera.GetComponent<CameraFollowTarget>();
             cameraFollowTarget.Initialize(player.transform);
 
             _audioService.PlayMusic(MusicType.Game);

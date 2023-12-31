@@ -1005,7 +1005,7 @@ public class LeanTween : MonoBehaviour {
 
     private static LTDescr pushNewTween( GameObject gameObject, Vector3 to, float time, LTDescr tween ){
         init(maxTweens);
-        if(gameObject==null || tween==null)
+        if(gameObject == null || tween == null)
             return null;
 
         tween.trans = gameObject.transform;
