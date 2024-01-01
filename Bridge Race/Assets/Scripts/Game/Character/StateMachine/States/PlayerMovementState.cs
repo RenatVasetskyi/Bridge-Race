@@ -1,3 +1,4 @@
+using Game.Character.Animations;
 using Game.Character.StateMachine.Interfaces;
 using Game.Input.Interfaces;
 using UnityEngine;
@@ -9,17 +10,20 @@ namespace Game.Character.StateMachine.States
         private readonly IInputController _inputController;
         private readonly Rigidbody _rigidbody;
         private readonly float _speed;
+        private readonly PlayerAnimator _playerAnimator;
 
         public PlayerMovementState(IInputController inputController, Rigidbody rigidbody, 
-            ref float speed)
+            ref float speed, PlayerAnimator playerAnimator)
         {
             _inputController = inputController;
             _rigidbody = rigidbody;
             _speed = speed;
+            _playerAnimator = playerAnimator;
         }
         
         public void Enter()
         {
+            _playerAnimator.PlayWalkAnimation();
         }
 
         public void Exit()

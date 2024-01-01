@@ -1,4 +1,5 @@
 ﻿using Data;
+using Game.Character.Animations;
 using Game.Character.Data;
 using Game.Character.StateMachine;
 using Game.Character.StateMachine.Interfaces;
@@ -14,10 +15,13 @@ namespace Game.Character
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
 
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Animator _animator;
 
         private GameSettings _gameSettings;
         
         private IInputController _inputController;
+        
+        private PlayerAnimator _playerAnimator;
 
         [Inject]
         public void Construct(GameSettings gameSettings)
@@ -28,9 +32,10 @@ namespace Game.Character
         public void Initialize(IInputController inputController)
         {
             _inputController = inputController;
+            _playerAnimator = new PlayerAnimator(_animator);
             
             StateFactory stateFactory = new StateFactory
-                (_stateMachine, _inputController, _rigidbody, _gameSettings.PlayerData);
+                (_stateMachine, _inputController, _rigidbody, _gameSettings.PlayerData, _playerAnimator);
 
             Subscribe();
             
@@ -80,14 +85,16 @@ namespace Game.Character
             private readonly IInputController _inputController;
             private readonly Rigidbody _rigidbody;
             private readonly PlayerData _playerData;
+            private readonly PlayerAnimator _playerAnimator;
 
             public StateFactory(ICharacterStateMachine stateMachine, IInputController inputController, 
-                Rigidbody rigidbody, PlayerData playerData)
+                Rigidbody rigidbody, PlayerData playerData, PlayerAnimator playerAnimator)
             {
                 _stateMachine = stateMachine;
                 _inputController = inputController;
                 _rigidbody = rigidbody;
                 _playerData = playerData;
+                _playerAnimator = playerAnimator;
 
                 CreateStates();
             }
@@ -100,13 +107,13 @@ namespace Game.Character
 
             private void CreatePlayerIdleState()
             {
-                _stateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
+                _stateMachine.AddState<PlayerIdleState>(new PlayerIdleState(_playerAnimator));
             }
 
             private void CreatePlayerMovementState()
             {
                 _stateMachine.AddState<PlayerMovementState>(new PlayerMovementState
-                    (_inputController, _rigidbody, ref _playerData.Speed));
+                    (_inputController, _rigidbody, ref _playerData.Speed, _playerAnimator));
             }
         }
     }
