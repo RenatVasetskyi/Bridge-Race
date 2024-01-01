@@ -33,10 +33,6 @@ MonoBehaviour:
     m_Address: MainMenuWindow
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 50c549939b9529d49b9eae59fc1d0fd3
-    m_Address: Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 63d34f67f5ea287458cec889cd2f99f7
     m_Address: BaseCamera
     m_ReadOnly: 0
@@ -63,6 +59,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 01890441a4c3f5e4ea89822ce7834040
     m_Address: MainMenuCamera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1e8e1924bb442334c9125455634bb567
+    m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
