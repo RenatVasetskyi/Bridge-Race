@@ -2,7 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Game.Tutorial
+namespace UI.Game.Tutorial
 {
     public class AnimatedHand : MonoBehaviour
     {

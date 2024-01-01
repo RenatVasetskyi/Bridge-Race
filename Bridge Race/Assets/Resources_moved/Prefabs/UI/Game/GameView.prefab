@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Joystick: {fileID: 3544795928640734641}
+  _animatedHand: {fileID: 297010092949791357}
+  _tutorial: {fileID: 297010093528696322}
 --- !u!1001 &5498803450934419270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -234,6 +236,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76c897428d5d9684db88cfb8d5946b61, type: 3}
+--- !u!114 &297010092949791357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5210837949773069627, guid: 76c897428d5d9684db88cfb8d5946b61,
+    type: 3}
+  m_PrefabInstance: {fileID: 5498803450934419270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c3d37a3f8842308c40e08265bbfcdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &297010093528696322 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5210837950301509956, guid: 76c897428d5d9684db88cfb8d5946b61,
+    type: 3}
+  m_PrefabInstance: {fileID: 5498803450934419270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3544795928640734641 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9042675578863524599, guid: 76c897428d5d9684db88cfb8d5946b61,
