@@ -50,7 +50,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 43b51ff09dc396f439e8a480e02880e0
-    m_Address: UICamera
+    m_Address: GameUICamera
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 6797887f4d63cbb4ca653a0f674df8ec
@@ -59,6 +59,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 3b6a037ecc374724380935d001c4ecd0
     m_Address: Tutorial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 01890441a4c3f5e4ea89822ce7834040
+    m_Address: MainMenuCamera
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

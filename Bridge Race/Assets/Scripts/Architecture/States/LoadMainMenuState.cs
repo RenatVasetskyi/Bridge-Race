@@ -45,7 +45,7 @@ namespace Architecture.States
                 (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
             Camera camera = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.UICamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+                (_gameSettings.MainMenuCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             Canvas mainMenu = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.MainMenu, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();

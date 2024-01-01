@@ -8,6 +8,7 @@ using Game.Levels;
 using UI.Game;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Rendering.Universal;
 
 namespace Architecture.States
 {
@@ -62,6 +63,9 @@ namespace Architecture.States
             
             Camera uiCamera = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.UICamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+            
+            UniversalAdditionalCameraData cameraData = gameCamera.GetComponent<UniversalAdditionalCameraData>();
+            cameraData.cameraStack.Add(uiCamera);
             
             GameView gameView = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();

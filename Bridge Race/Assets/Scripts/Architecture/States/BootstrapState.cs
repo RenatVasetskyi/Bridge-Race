@@ -12,14 +12,17 @@ namespace Architecture.States
         private readonly IAudioService _audioService;
         private readonly ICurrencyService _currencyService;
         private readonly ISceneLoader _sceneLoader;
+        private readonly ILevelProgressService _levelProgressService;
 
         public BootstrapState(IStateMachine stateMachine, IAudioService audioService,
-            ICurrencyService currencyService, ISceneLoader sceneLoader) 
+            ICurrencyService currencyService, ISceneLoader sceneLoader, 
+            ILevelProgressService levelProgressService) 
         {
             _stateMachine = stateMachine;
             _audioService = audioService;
             _currencyService = currencyService;
             _sceneLoader = sceneLoader;
+            _levelProgressService = levelProgressService;
         }
 
         public void Exit()
@@ -35,6 +38,7 @@ namespace Architecture.States
         {
             _audioService.Initialize();
             _currencyService.Load();
+            _levelProgressService.Load();
             
             _stateMachine.Enter<LoadMainMenuState>();
         }

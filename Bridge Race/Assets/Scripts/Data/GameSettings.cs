@@ -14,7 +14,7 @@ namespace Data
         public AssetReferenceGameObject GameView;
         public AssetReferenceGameObject BaseParent;
         public AssetReferenceGameObject Player;
-        public AssetReferenceGameObject BaseCamera;
+        public AssetReferenceGameObject MainMenuCamera;
         public AssetReferenceGameObject UICamera;
         public AssetReferenceGameObject GameCamera;
         

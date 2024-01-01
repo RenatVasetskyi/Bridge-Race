@@ -32,8 +32,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  BaseCamera:
-    m_AssetGUID: 63d34f67f5ea287458cec889cd2f99f7
+  MainMenuCamera:
+    m_AssetGUID: 01890441a4c3f5e4ea89822ce7834040
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
