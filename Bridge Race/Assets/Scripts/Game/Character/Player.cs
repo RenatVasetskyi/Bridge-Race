@@ -107,7 +107,7 @@ namespace Game.Character
 
             private void CreatePlayerIdleState()
             {
-                _stateMachine.AddState<PlayerIdleState>(new PlayerIdleState(_playerAnimator));
+                _stateMachine.AddState<PlayerIdleState>(new PlayerIdleState(_playerAnimator, _rigidbody));
             }
 
             private void CreatePlayerMovementState()

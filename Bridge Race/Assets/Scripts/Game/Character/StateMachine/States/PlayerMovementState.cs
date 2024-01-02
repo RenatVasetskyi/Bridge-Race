@@ -7,6 +7,8 @@ namespace Game.Character.StateMachine.States
 {
     public class PlayerMovementState : ICharacterState
     {
+        private const int RotationSpeed = 400;
+        
         private readonly IInputController _inputController;
         private readonly Rigidbody _rigidbody;
         private readonly float _speed;
@@ -32,6 +34,7 @@ namespace Game.Character.StateMachine.States
 
         public void FrameUpdate()
         {
+            Rotate();
         }
 
         public void PhysicsUpdate()
@@ -41,8 +44,19 @@ namespace Game.Character.StateMachine.States
 
         private void Move()
         { 
-            _rigidbody.velocity = new Vector3(_inputController.CurrentDirection.x, 
-                _rigidbody.velocity.y, _inputController.CurrentDirection.y) * _speed;   
+            Vector3 direction = new Vector3(_inputController.CurrentDirection.x, 0f, _inputController.CurrentDirection.y);
+            
+            _rigidbody.velocity = direction * _speed;
+        }
+
+        private void Rotate()
+        {
+            float angle = Mathf.Atan2(_inputController.CurrentDirection.x, _inputController.CurrentDirection.y) * Mathf.Rad2Deg;
+            
+            Quaternion newRotation = Quaternion.Euler(0f, angle, 0f);
+            
+            _rigidbody.transform.rotation = Quaternion.RotateTowards(_rigidbody.transform.rotation,
+                newRotation, RotationSpeed * Time.deltaTime);
         }
     }
 }
