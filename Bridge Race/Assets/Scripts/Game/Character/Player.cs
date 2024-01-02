@@ -1,6 +1,10 @@
-﻿using Data;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Data;
+using Game.BridgeConstruction;
 using Game.Character.Animations;
 using Game.Character.Data;
+using Game.Character.Interfaces;
 using Game.Character.StateMachine;
 using Game.Character.StateMachine.Interfaces;
 using Game.Character.StateMachine.States;
@@ -10,12 +14,17 @@ using Zenject;
 
 namespace Game.Character
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IBridgeTileCollectable
     {
+        private readonly List<BridgeTile> _bridgeTiles = new();
+        
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
 
+        [Header("Components")]
+        
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Transform _bridgeTileHolder; 
 
         private GameSettings _gameSettings;
         
@@ -40,6 +49,25 @@ namespace Game.Character
             Subscribe();
             
             EnterIdleState();
+        }
+        
+        public void Collect(Collider tile, BridgeTile tileComponent)
+        {
+            if (_bridgeTiles.Count == 0)
+            {
+                tileComponent.transform.position = _bridgeTileHolder.position;   
+            }
+            else
+            {
+                tileComponent.transform.position = _bridgeTiles.Last().transform
+                    .position + new Vector3(0, tile.bounds.extents.y * 2, 0);
+            }
+            
+            tile.transform.SetParent(_bridgeTileHolder);
+            
+            tile.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+            _bridgeTiles.Add(tileComponent);
         }
 
         private void Update()
