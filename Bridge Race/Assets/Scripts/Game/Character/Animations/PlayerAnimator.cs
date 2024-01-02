@@ -22,5 +22,10 @@ namespace Game.Character.Animations
         {
             _animator.Play(_playerAnimationHashHolder.Walk);
         }
+
+        public void SetSpeed(float speed)
+        {
+            _animator.speed = speed;
+        }
     }
 }

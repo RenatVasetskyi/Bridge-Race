@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390c650d652146949a46a08f8ba92070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Joystick: {fileID: 22976314921593756}
+  Joystick: {fileID: 4622424960034145622}
   _animatedHand: {fileID: 297010092949791357}
   _tutorial: {fileID: 297010093528696322}
 --- !u!1001 &5498803450934419270
@@ -239,6 +239,36 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484834919865758017, guid: 76c897428d5d9684db88cfb8d5946b61,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5484834921027826911, guid: 76c897428d5d9684db88cfb8d5946b61,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -276,18 +306,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76c897428d5d9684db88cfb8d5946b61, type: 3}
---- !u!114 &22976314921593756 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5484834921027826906, guid: 76c897428d5d9684db88cfb8d5946b61,
-    type: 3}
-  m_PrefabInstance: {fileID: 5498803450934419270}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &297010092949791357 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5210837949773069627, guid: 76c897428d5d9684db88cfb8d5946b61,
@@ -306,6 +324,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5498803450934419270}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4622424960034145622 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 894399487590488592, guid: 76c897428d5d9684db88cfb8d5946b61,
+    type: 3}
+  m_PrefabInstance: {fileID: 5498803450934419270}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a47f546fc70ec8428172694e78e4288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4745066261641541331 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 979093136556353941, guid: 76c897428d5d9684db88cfb8d5946b61,

@@ -7,7 +7,9 @@ namespace Game.Character.StateMachine.States
 {
     public class PlayerMovementState : ICharacterState
     {
-        private const int RotationSpeed = 400;
+        private const float AnimationSpeedMultiplayer = 0.13f;
+        
+        private const int RotationSpeed = 800;
         
         private readonly IInputController _inputController;
         private readonly Rigidbody _rigidbody;
@@ -25,6 +27,8 @@ namespace Game.Character.StateMachine.States
         
         public void Enter()
         {
+            _playerAnimator.SetSpeed(_speed * AnimationSpeedMultiplayer);
+            
             _playerAnimator.PlayWalkAnimation();
         }
 
@@ -43,8 +47,9 @@ namespace Game.Character.StateMachine.States
         }
 
         private void Move()
-        { 
-            Vector3 direction = new Vector3(_inputController.CurrentDirection.x, 0f, _inputController.CurrentDirection.y);
+        {
+            Vector3 direction = new Vector3(_inputController.CurrentDirection.x,
+                0f, _inputController.CurrentDirection.y).normalized;
             
             _rigidbody.velocity = direction * _speed;
         }
