@@ -10,9 +10,9 @@ namespace Game.BridgeConstruction
 
         private bool _isUsed;
         
-        public Collider Collider => _collider;
         public MeshRenderer MeshRenderer => _meshRenderer;
-        
+        public Vector3 Position { get; set; }
+
         private void OnTriggerEnter(Collider other)
         {
             if (!_isUsed & other.gameObject.TryGetComponent(out IBridgeTileCollectable player))

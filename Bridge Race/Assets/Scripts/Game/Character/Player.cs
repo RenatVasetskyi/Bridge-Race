@@ -16,6 +16,8 @@ namespace Game.Character
 {
     public class Player : MonoBehaviour, IBridgeTileCollectable
     {
+        private const int BridgeTileLimit = 30;
+        
         private const float MoveTileDuration = 0.15f;
 
         private readonly List<BridgeTile> _bridgeTiles = new();
@@ -59,17 +61,20 @@ namespace Game.Character
         
         public void Collect(BridgeTile tile)
         {
-            Vector3 tilePosition = GetNextTilePosition(tile.Collider);
-
+            if (_bridgeTiles.Count >= BridgeTileLimit)
+                return;
+            
             tile.transform.SetParent(_bridgeTileHolder);
 
             ResetRotation(tile.transform);
             
-            Vector3 localTilePosition = _bridgeTileHolder.InverseTransformPoint(tilePosition);
-
-            AnimateTile(tile, localTilePosition);
+            tile.Position = GetNextTilePosition(tile);
+            
+            Vector3 localTilePosition = _bridgeTileHolder.InverseTransformPoint(tile.Position);
             
             _bridgeTiles.Add(tile);
+            
+            AnimateTile(tile, localTilePosition);
         }
 
         private void Update()
@@ -87,20 +92,22 @@ namespace Game.Character
             UnSubscribe();
         }
         
-        private Vector3 GetNextTilePosition(Collider tile)
+        private Vector3 GetNextTilePosition(BridgeTile tile)
         {
             Vector3 tilePosition;
 
             if (_bridgeTiles.Count == 0)
             {
-                tilePosition = _bridgeTileHolder.position;   
+                tilePosition = _bridgeTileHolder.position; 
+                
+                Debug.Log(tilePosition);
             }
             else
             {
-                tilePosition = _bridgeTiles.Last().transform
-                    .position + new Vector3(0, tile.bounds.extents.y * 2, 0);
+                tilePosition = _bridgeTiles.Last().Position + new Vector3
+                    (0, tile.MeshRenderer.bounds.extents.y * 2, 0);
             }
-
+            
             return tilePosition;
         }
         
