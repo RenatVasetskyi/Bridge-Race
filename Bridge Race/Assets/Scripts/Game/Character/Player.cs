@@ -16,6 +16,8 @@ namespace Game.Character
 {
     public class Player : MonoBehaviour, IBridgeTileCollectable
     {
+        private const float MoveTileDuration = 0.15f;
+
         private readonly List<BridgeTile> _bridgeTiles = new();
         
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
@@ -24,7 +26,11 @@ namespace Game.Character
         
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Transform _bridgeTileHolder; 
+        [SerializeField] private Transform _bridgeTileHolder;
+
+        [Header("Tile Animation")] 
+        
+        [SerializeField] private LeanTweenType _tileAnimationEasing;
 
         private GameSettings _gameSettings;
         
@@ -51,23 +57,19 @@ namespace Game.Character
             EnterIdleState();
         }
         
-        public void Collect(Collider tile, BridgeTile tileComponent)
+        public void Collect(BridgeTile tile)
         {
-            if (_bridgeTiles.Count == 0)
-            {
-                tileComponent.transform.position = _bridgeTileHolder.position;   
-            }
-            else
-            {
-                tileComponent.transform.position = _bridgeTiles.Last().transform
-                    .position + new Vector3(0, tile.bounds.extents.y * 2, 0);
-            }
-            
-            tile.transform.SetParent(_bridgeTileHolder);
-            
-            tile.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Vector3 tilePosition = GetNextTilePosition(tile.Collider);
 
-            _bridgeTiles.Add(tileComponent);
+            tile.transform.SetParent(_bridgeTileHolder);
+
+            ResetRotation(tile.transform);
+            
+            Vector3 localTilePosition = _bridgeTileHolder.InverseTransformPoint(tilePosition);
+
+            AnimateTile(tile, localTilePosition);
+            
+            _bridgeTiles.Add(tile);
         }
 
         private void Update()
@@ -83,6 +85,36 @@ namespace Game.Character
         private void OnDestroy()
         {
             UnSubscribe();
+        }
+        
+        private Vector3 GetNextTilePosition(Collider tile)
+        {
+            Vector3 tilePosition;
+
+            if (_bridgeTiles.Count == 0)
+            {
+                tilePosition = _bridgeTileHolder.position;   
+            }
+            else
+            {
+                tilePosition = _bridgeTiles.Last().transform
+                    .position + new Vector3(0, tile.bounds.extents.y * 2, 0);
+            }
+
+            return tilePosition;
+        }
+        
+        private void AnimateTile(BridgeTile tile, Vector3 localTilePosition)
+        {
+            LeanTween.moveLocal(tile.gameObject, new Vector3(tile.MeshRenderer.bounds.extents.x,
+                    localTilePosition.y, 0), MoveTileDuration).setEase(_tileAnimationEasing)
+                .setOnComplete(() => LeanTween.moveLocalX(tile.gameObject, 0, MoveTileDuration)
+                    .setEase(_tileAnimationEasing));
+        }
+        
+        private void ResetRotation(Transform transform)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 0);
         }
 
         private void Subscribe()
