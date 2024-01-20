@@ -99,8 +99,6 @@ namespace Game.Character
             if (_bridgeTiles.Count == 0)
             {
                 tilePosition = _bridgeTileHolder.position; 
-                
-                Debug.Log(tilePosition);
             }
             else
             {
