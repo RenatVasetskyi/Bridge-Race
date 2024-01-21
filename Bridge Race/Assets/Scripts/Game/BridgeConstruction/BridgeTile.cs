@@ -10,8 +10,9 @@ namespace Game.BridgeConstruction
 
         private bool _isUsed;
         
-        public MeshRenderer MeshRenderer => _meshRenderer;
         public Vector3 Position { get; set; }
+        public MeshRenderer MeshRenderer => _meshRenderer;
+        public Material Material => _meshRenderer.material;
 
         private void OnTriggerEnter(Collider other)
         {

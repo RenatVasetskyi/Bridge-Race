@@ -19,7 +19,7 @@ namespace Game.Character
         private const int BridgeTileLimit = 30;
         
         private const float MoveTileDuration = 0.15f;
-
+ 
         private readonly List<BridgeTile> _bridgeTiles = new();
         
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
@@ -75,6 +75,20 @@ namespace Game.Character
             _bridgeTiles.Add(tile);
             
             AnimateTile(tile, localTilePosition);
+        }
+        
+        public BridgeTile ExtractTile()
+        {
+            if (_bridgeTiles.Count > 0)
+            {
+                BridgeTile tile = _bridgeTiles.Last();
+                
+                _bridgeTiles.Remove(tile);
+
+                return tile;
+            }
+
+            return null;
         }
 
         private void Update()
