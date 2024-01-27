@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Architecture.Services.Interfaces;
+using UI.Base;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
@@ -10,7 +11,9 @@ namespace Architecture.Services
     {
         private readonly DiContainer _container;
         private readonly IAssetProvider _assetProvider;
-        
+
+        public LoadingCurtain LoadingCurtain { get; private set; }
+
         public BaseFactory(DiContainer container, IAssetProvider assetProvider)
         {
             _container = container;
@@ -67,6 +70,21 @@ namespace Architecture.Services
             GameObject loadedResource = await _assetProvider.Load<GameObject>(assetReference);
             
             return Object.Instantiate(loadedResource, at, rotation, parent);
+        }
+
+        public async void CreateLoadingCurtain(AssetReferenceGameObject prefab)
+        {
+            if (LoadingCurtain != null)
+            {
+                LoadingCurtain.Show();
+                
+                return;
+            }
+            
+            LoadingCurtain = (await CreateAddressableWithContainer(prefab,
+                Vector3.zero, Quaternion.identity, null)).GetComponent<LoadingCurtain>();
+            
+            LoadingCurtain.Show();  
         }
     }
 }

@@ -7,7 +7,6 @@ using Game.Character;
 using Game.Levels;
 using UI.Game;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Rendering.Universal;
 
 namespace Architecture.States
@@ -47,6 +46,8 @@ namespace Architecture.States
 
         public void Enter()
         {
+            _baseFactory.CreateLoadingCurtain(_gameSettings.LoadingCurtain);
+            
             _sceneLoader.Load(GameScene, Initialize);
         }
 
@@ -83,6 +84,11 @@ namespace Architecture.States
             cameraFollowTarget.Initialize(player.transform);
 
             _audioService.PlayMusic(MusicType.Game);
+
+            if (_baseFactory.LoadingCurtain != null)
+                _baseFactory.LoadingCurtain.Hide();
+            
+            _assetProvider.CleanUp();
         }
     }
 }

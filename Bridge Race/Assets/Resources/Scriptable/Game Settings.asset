@@ -47,6 +47,11 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  LoadingCurtain:
+    m_AssetGUID: 3047fc500d9dd4a6fb8bd750bdb6329f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   Levels:
   - {fileID: 5830269870814203988, guid: 914c58434c1acda459012781a037f967, type: 3}
   PlayerData:

@@ -17,6 +17,7 @@ namespace Data
         public AssetReferenceGameObject MainMenuCamera;
         public AssetReferenceGameObject UICamera;
         public AssetReferenceGameObject GameCamera;
+        public AssetReferenceGameObject LoadingCurtain;
         
         public Level[] Levels;
 

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using UI.Base;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -6,6 +7,7 @@ namespace Architecture.Services.Interfaces
 {
     public interface IBaseFactory
     {
+        LoadingCurtain LoadingCurtain { get; }
         T CreateBaseWithContainer<T>(string path) where T : Component;
         T CreateBaseWithContainer<T>(string path, Transform parent) where T : Component;
         T CreateBaseWithContainer<T>(string path, Vector3 at, Quaternion rotation, Transform parent) where T : Component;
@@ -16,7 +18,7 @@ namespace Architecture.Services.Interfaces
         Task<GameObject> CreateAddressableWithContainer
             (AssetReferenceGameObject assetReference, Vector3 at, Quaternion rotation, Transform parent);
         Task<GameObject> CreateAddressableWithObject(AssetReferenceGameObject assetReference, Vector3 at,
-            Quaternion rotation,
-            Transform parent);
+            Quaternion rotation, Transform parent);
+        void CreateLoadingCurtain(AssetReferenceGameObject prefab);
     }
 }

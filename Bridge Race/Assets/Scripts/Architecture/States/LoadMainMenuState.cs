@@ -35,7 +35,9 @@ namespace Architecture.States
         }
 
         public void Enter()
-        { 
+        {
+            _baseFactory.CreateLoadingCurtain(_gameSettings.LoadingCurtain);
+
             _sceneLoader.Load(MainMenuScene, Initialize);
         }
 
@@ -52,6 +54,9 @@ namespace Architecture.States
             mainMenu.worldCamera = camera;
             
             _audioService.PlayMusic(MusicType.MainMenu);
+
+            if (_baseFactory.LoadingCurtain != null)
+                _baseFactory.LoadingCurtain.Hide();
         }
     }
 }
