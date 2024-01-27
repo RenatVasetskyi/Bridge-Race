@@ -154,13 +154,6 @@ namespace Game.Character
             if (Physics.Raycast(_climbRaycastOrigin.position, transform.TransformDirection(-Vector3.up),
                     out hit, StepRayDistance, _stepLayer | _groundLayer))
             {
-                float positionY;
-                
-                // if (hit.point.y > transform.position.y)
-                    // positionY = hit.point.y + StepOffsetY;
-                // else
-                    // positionY = hit.point.y;
-                
                 Vector3 targetVector = new Vector3(_rigidbody.position.x, hit.point.y + StepOffsetY, _rigidbody.position.z);   
 
                 _rigidbody.position = targetVector;
