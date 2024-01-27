@@ -930,6 +930,9 @@ MonoBehaviour:
   _stepLayer:
     serializedVersion: 2
     m_Bits: 768
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _tileAnimationEasing: 26
 --- !u!1 &5048080878361441810
 GameObject:
