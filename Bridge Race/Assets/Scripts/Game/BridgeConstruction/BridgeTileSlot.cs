@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Character.Interfaces;
+﻿using Game.Character.Interfaces;
 using UnityEngine;
 
 namespace Game.BridgeConstruction
@@ -7,6 +6,8 @@ namespace Game.BridgeConstruction
     public class BridgeTileSlot : MonoBehaviour
     {
         [SerializeField] private MeshRenderer _meshRenderer;
+        
+        [SerializeField] private Bridge _bridge;
 
         private bool _isEmpty = true;
 
@@ -32,6 +33,8 @@ namespace Game.BridgeConstruction
                 _meshRenderer.material = tile.Material;
 
                 _meshRenderer.enabled = true;
+                
+                _bridge.MoveColliderToNextTileOrDisable();
                     
                 Destroy(tile.gameObject);
             }

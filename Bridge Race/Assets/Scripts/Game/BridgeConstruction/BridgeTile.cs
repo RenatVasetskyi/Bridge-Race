@@ -7,7 +7,7 @@ namespace Game.BridgeConstruction
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private MeshRenderer _meshRenderer;
-
+        
         private bool _isUsed;
         
         public Vector3 Position { get; set; }
