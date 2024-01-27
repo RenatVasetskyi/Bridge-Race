@@ -818,6 +818,7 @@ GameObject:
   - component: {fileID: 5051497588148944598}
   - component: {fileID: 273039973894338561}
   - component: {fileID: 273039973894338562}
+  - component: {fileID: 4064742067815989254}
   - component: {fileID: 7141849014246767203}
   - component: {fileID: 8532142107407560227}
   m_Layer: 7
@@ -876,6 +877,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!65 &4064742067815989254
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5048052265291689760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.5, z: 0.1}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!95 &7141849014246767203
 Animator:
   serializedVersion: 5
@@ -1497,7 +1511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8034344156855395017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0.4}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
