@@ -79,11 +79,9 @@ namespace Game.Character
             
             tile.Position = GetNextTilePosition(tile);
             
-            Vector3 localTilePosition = _bridgeTileHolder.InverseTransformPoint(tile.Position);
-            
             _bridgeTiles.Add(tile);
             
-            AnimateTile(tile, localTilePosition);
+            AnimateTile(tile);
         }
         
         public BridgeTile ExtractTile()
@@ -123,21 +121,21 @@ namespace Game.Character
 
             if (_bridgeTiles.Count == 0)
             {
-                tilePosition = _bridgeTileHolder.position; 
+                tilePosition = _bridgeTileHolder.localPosition; 
             }
             else
             {
                 tilePosition = _bridgeTiles.Last().Position + new Vector3
-                    (0, tile.MeshRenderer.bounds.extents.y * 2, 0);
+                    (0, tile.MeshRenderer.bounds.extents.y / 2, 0);
             }
             
             return tilePosition;
         }
         
-        private void AnimateTile(BridgeTile tile, Vector3 localTilePosition)
+        private void AnimateTile(BridgeTile tile)
         {
             LeanTween.moveLocal(tile.gameObject, new Vector3(tile.MeshRenderer.bounds.extents.x,
-                    localTilePosition.y, 0), MoveTileDuration).setEase(_tileAnimationEasing)
+                    tile.Position.y, 0), MoveTileDuration).setEase(_tileAnimationEasing)
                 .setOnComplete(() => LeanTween.moveLocalX(tile.gameObject, 0, MoveTileDuration)
                     .setEase(_tileAnimationEasing));
         }
