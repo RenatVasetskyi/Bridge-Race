@@ -216,7 +216,7 @@ namespace Game.Character
             private void CreatePlayerMovementState()
             {
                 _stateMachine.AddState<PlayerMovementState>(new PlayerMovementState
-                    (_inputController, _rigidbody, ref _playerData.Speed, _playerAnimator));
+                    (_inputController, _rigidbody, _playerAnimator, ref _playerData.Speed));
             }
         }
     }

@@ -13,23 +13,23 @@ namespace Game.Character.StateMachine.States
         
         private readonly IInputController _inputController;
         private readonly Rigidbody _rigidbody;
-        private readonly float _speed;
         private readonly PlayerAnimator _playerAnimator;
+        private readonly float _speed;
 
         public PlayerMovementState(IInputController inputController, Rigidbody rigidbody, 
-            ref float speed, PlayerAnimator playerAnimator)
+            PlayerAnimator playerAnimator, ref float speed)
         {
             _inputController = inputController;
             _rigidbody = rigidbody;
-            _speed = speed;
             _playerAnimator = playerAnimator;
+            _speed = speed;
         }
         
         public void Enter()
         {
             _playerAnimator.SetSpeed(_speed * AnimationSpeedMultiplayer);
             
-            _playerAnimator.PlayWalkAnimation();
+            _playerAnimator.PlayWalkAnimation();   
         }
 
         public void Exit()

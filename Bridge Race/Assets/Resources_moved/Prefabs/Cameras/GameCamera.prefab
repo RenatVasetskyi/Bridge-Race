@@ -122,5 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fc61c520f142b7b7c9120edf167cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _offsetPosition: {x: 0, y: 22, z: -25}
-  _startRotation: {x: 30, y: 0, z: 0}
+  _offsetPosition: {x: 0, y: 30, z: -25}
+  _startRotation: {x: 35, y: 0, z: 0}

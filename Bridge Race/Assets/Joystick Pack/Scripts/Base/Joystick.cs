@@ -44,6 +44,10 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     private Vector2 input = Vector2.zero;
 
+    private bool _isActivatedEventSent;
+
+    private int _dragsCount;
+
     protected virtual void Start()
     {
         HandleRange = handleRange;
@@ -64,8 +68,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
-        
-        OnInputActivated?.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -80,6 +82,15 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
         handle.anchoredPosition = input * radius * handleRange;
+
+        if (!_isActivatedEventSent & _dragsCount == 1)
+        {
+            _isActivatedEventSent = true;
+            
+            OnInputActivated?.Invoke();   
+        }
+
+        _dragsCount++;
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
@@ -141,6 +152,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = Vector2.zero;
         
         OnInputDeactivated?.Invoke();
+
+        _isActivatedEventSent = false;
+        _dragsCount = 0;
     }
 
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
