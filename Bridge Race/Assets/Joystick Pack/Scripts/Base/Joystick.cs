@@ -8,7 +8,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public event Action OnInputActivated;
     public event Action OnInputDeactivated;
     public Vector2 CurrentDirection => Direction;
-
+    
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
@@ -37,6 +37,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
+    
     private RectTransform baseRect = null;
 
     private Canvas canvas;
@@ -69,7 +70,14 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         OnDrag(eventData);
     }
-
+    
+    public void Disable()
+    { 
+        OnInputDeactivated?.Invoke();
+        
+        gameObject.SetActive(false);   
+    }
+    
     public void OnDrag(PointerEventData eventData)
     {
         cam = null;

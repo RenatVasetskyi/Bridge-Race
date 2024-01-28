@@ -9,5 +9,6 @@ namespace Architecture.Services.Interfaces
         void SetLevelToPass(LevelType level);
         void Load();
         Level GetCurrentLevelToPass();
+        void SetNextLevelToPass();
     }
 }

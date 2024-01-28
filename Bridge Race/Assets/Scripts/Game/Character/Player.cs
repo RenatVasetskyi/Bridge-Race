@@ -14,7 +14,7 @@ using Zenject;
 
 namespace Game.Character
 {
-    public class Player : MonoBehaviour, IBridgeTileCollectable
+    public class Player : MonoBehaviour, IBridgeTileCollectable, IFinishDetectable
     {
         private const int BridgeTileLimit = 30;
         
@@ -96,6 +96,15 @@ namespace Game.Character
             }
 
             return null;
+        }
+        
+        public void DoFinishAnimation()
+        {
+            _rigidbody.isKinematic = true;
+            
+            _bridgeTileHolder.gameObject.SetActive(false);
+
+            _inputController.Disable();
         }
 
         private void Update()

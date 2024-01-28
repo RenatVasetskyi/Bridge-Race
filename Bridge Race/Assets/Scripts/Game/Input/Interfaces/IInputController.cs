@@ -8,5 +8,6 @@ namespace Game.Input.Interfaces
         event Action OnInputActivated;
         event Action OnInputDeactivated;
         Vector2 CurrentDirection { get; }
+        void Disable();
     }
 }

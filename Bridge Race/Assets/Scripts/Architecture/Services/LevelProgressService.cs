@@ -50,5 +50,23 @@ namespace Architecture.Services
 
             return _gameSettings.Levels.First();
         }
+
+        public void SetNextLevelToPass()
+        {
+            int currentLevelToPass = (int)GetCurrentLevelToPass().Type;
+
+            if (currentLevelToPass < _gameSettings.Levels.Length - 1 & 
+                currentLevelToPass == (int)CurrentLevelToPass)
+            {
+                CurrentLevelToPass = _gameSettings.Levels[currentLevelToPass + 1].Type;
+                
+                Save();
+            }
+        }
+
+        private void Save()
+        {
+            _saveService.SaveString(CurrentLevelToPassSaveId, CurrentLevelToPass.ToString());
+        }
     }
 }
