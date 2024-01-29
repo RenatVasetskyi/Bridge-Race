@@ -87,8 +87,6 @@ namespace Architecture.States
 
             if (_baseFactory.LoadingCurtain != null)
                 _baseFactory.LoadingCurtain.Hide();
-            
-            _assetProvider.CleanUp();
         }
     }
 }
