@@ -10,6 +10,7 @@ using Game.Character.StateMachine.Interfaces;
 using Game.Character.StateMachine.States;
 using Game.Input.Interfaces;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Game.Character
