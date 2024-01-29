@@ -10,7 +10,6 @@ using Game.Character.StateMachine.Interfaces;
 using Game.Character.StateMachine.States;
 using Game.Input.Interfaces;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Game.Character
@@ -22,7 +21,6 @@ namespace Game.Character
         private const float MoveTileDuration = 0.15f;
         
         private const float StepRayDistance = 3f;
-        private const float StepOffsetY = 0.2f;
  
         private readonly List<BridgeTile> _bridgeTiles = new();
         
@@ -162,7 +160,7 @@ namespace Game.Character
             if (Physics.Raycast(_climbRaycastOrigin.position, transform.TransformDirection(-Vector3.up),
                     out hit, StepRayDistance, _stepLayer | _groundLayer))
             {
-                Vector3 targetVector = new Vector3(_rigidbody.position.x, hit.point.y + StepOffsetY, _rigidbody.position.z);   
+                Vector3 targetVector = new Vector3(_rigidbody.position.x, hit.point.y, _rigidbody.position.z);   
 
                 _rigidbody.position = targetVector;
                 
