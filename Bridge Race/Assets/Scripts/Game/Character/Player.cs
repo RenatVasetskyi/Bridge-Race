@@ -18,6 +18,8 @@ namespace Game.Character
     {
         private const int BridgeTileLimit = 30;
         
+        private const int FinishAnimationDuration = 1;
+        
         private const float MoveTileDuration = 0.15f;
         
         private const float StepRayDistance = 3f;
@@ -97,13 +99,16 @@ namespace Game.Character
             return null;
         }
         
-        public void DoFinishAnimation()
+        public void DoFinishAnimation(Transform finish)
         {
             _rigidbody.isKinematic = true;
             
             _bridgeTileHolder.gameObject.SetActive(false);
 
             _inputController.Disable();
+
+            LeanTween.scale(gameObject, Vector3.zero, FinishAnimationDuration);
+            LeanTween.move(gameObject, finish.position, FinishAnimationDuration);
         }
 
         private void Update()

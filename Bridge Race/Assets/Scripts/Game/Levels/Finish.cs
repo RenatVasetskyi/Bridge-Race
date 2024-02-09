@@ -23,7 +23,7 @@ namespace Game.Levels
             {
                 _isDetected = true;
                 
-                finishDetectable.DoFinishAnimation();
+                finishDetectable.DoFinishAnimation(transform);
                 
                 _levelProgressService.SetNextLevelToPass();
             }
