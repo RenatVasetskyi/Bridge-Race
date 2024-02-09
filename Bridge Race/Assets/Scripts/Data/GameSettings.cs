@@ -1,3 +1,4 @@
+using Game.BridgeConstruction;
 using Game.Character.Data;
 using Game.Levels;
 using UnityEngine;
@@ -18,12 +19,13 @@ namespace Data
         public AssetReferenceGameObject UICamera;
         public AssetReferenceGameObject GameCamera;
         public AssetReferenceGameObject LoadingCurtain;
+        public AssetReferenceGameObject BridgeTile;
+        public BridgeTile BridgeTileScript;
         
         public Level[] Levels;
 
         [Header("Player")]
         
         public PlayerData PlayerData;
-
     }
 }

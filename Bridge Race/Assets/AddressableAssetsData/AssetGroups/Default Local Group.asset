@@ -16,7 +16,11 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 30dd35320a8518f4f9c63e0207582fb3
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 0d8c8b894569ec3469e2a81504910803
+    m_Address: Assets/Resources_moved/Prefabs/Game/BridgeTiles/BridgeTile.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:
