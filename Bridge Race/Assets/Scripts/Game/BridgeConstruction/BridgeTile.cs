@@ -16,7 +16,6 @@ namespace Game.BridgeConstruction
         public Vector3 Position { get; set; }
         public MeshRenderer MeshRenderer => _meshRenderer;
         public Material Material => _meshRenderer.material;
-        public Vector3 Size => _collider.bounds.extents * 2;
 
         public void Initialize(ITileGenerator tileGenerator)
         {

@@ -32,6 +32,9 @@ namespace Game.Generation
 
         private Coroutine _generationCoroutine;
 
+        private Vector3 _minBounds;
+        private Vector3 _maxBounds;
+
         [Inject]
         public void Construct(IBaseFactory baseFactory, GameSettings gameSettings)
         {
@@ -46,9 +49,21 @@ namespace Game.Generation
 
         private void Awake()
         {
+            SetBoundsSize();
             StartGeneration(0);
 
             _createdTiles.ItemRemoved += TryToRestartGeneration;
+        }
+
+        private void SetBoundsSize()
+        {
+            Vector3 colliderBounds = _boxCollider.bounds.extents;
+            
+            _minBounds = new Vector3(transform.position.x - (colliderBounds.x / 2),
+                transform.position.y + (colliderBounds.y / 2), transform.position.z - (colliderBounds.z / 2));
+            
+            _maxBounds = new Vector3(transform.position.x + (colliderBounds.x / 2),
+                transform.position.y + (colliderBounds.y / 2), transform.position.z + (colliderBounds.z / 2));
         }
 
         private void OnDestroy()
@@ -78,25 +93,25 @@ namespace Game.Generation
         private async void SpawnTile()
         {
             BridgeTile createdTile = (await _baseFactory.CreateAddressableWithContainer(_gameSettings.BridgeTile, 
-                GetSpawnPosition(), Quaternion.identity, transform)).GetComponent<BridgeTile>();
-                         
+                Vector3.zero, Quaternion.identity, transform)).GetComponent<BridgeTile>();
+
+            createdTile.transform.position = GetSpawnPosition(createdTile
+                .GetComponent<BoxCollider>().bounds.extents * 2);
+            
             createdTile.Initialize(this);
 
             _createdTiles.Add(createdTile);
         }
         
-        private Vector3 GetSpawnPosition()
+        private Vector3 GetSpawnPosition(Vector3 tileSize)
         {
             int tries = 0;
             
             while (true)
             {
-                Vector3 bounds = _boxCollider.bounds.extents;
-
-                Vector3 tileSize = _gameSettings.BridgeTileScript.Size;
-                
-                Vector3 randomSpawnPoint = new Vector3(Random.Range(-bounds.x + tileSize.x,
-                    bounds.x - tileSize.x), bounds.y * 1.5f, Random.Range(-bounds.z + tileSize.z, bounds.z - tileSize.z));
+                Vector3 randomSpawnPoint = new Vector3(Random.Range(_minBounds.x + tileSize.x,
+                    _maxBounds.x - tileSize.x), _maxBounds.y + tileSize.y, Random.Range
+                    (_minBounds.z + tileSize.z, _maxBounds.z - tileSize.z));
                 
                 int closeTilesCount = 0;
                 
