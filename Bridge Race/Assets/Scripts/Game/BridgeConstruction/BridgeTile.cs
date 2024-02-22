@@ -26,14 +26,19 @@ namespace Game.BridgeConstruction
         {
             if (!_isUsed & other.gameObject.TryGetComponent(out IBridgeTileCollectable player))
             {
-                _isUsed = true;
-                
-                player.Collect(this);
-                
-                _collider.enabled = false;
-
-                _tileGenerator.RemoveTile(this);
+                ExtractTileFromGenerationSlot(player);
             }
+        }
+
+        private void ExtractTileFromGenerationSlot(IBridgeTileCollectable player)
+        {
+            _isUsed = true;
+                
+            player.Collect(this);
+                
+            _collider.enabled = false;
+
+            _tileGenerator.RegenerateTile();
         }
     }
 }
