@@ -17,13 +17,23 @@ namespace Game.Camera
 
         private void Awake()
         {
-            transform.rotation = Quaternion.Euler(_startRotation);
+            SetStartRotation();
         }
 
         private void LateUpdate()
         {
             if (_target != null)
-                transform.position = _target.position + _offsetPosition;
+                Follow();
+        }
+        
+        private void SetStartRotation()
+        {
+            transform.rotation = Quaternion.Euler(_startRotation);
+        }
+
+        private void Follow()
+        {
+            transform.position = _target.position + _offsetPosition;
         }
     }
 }

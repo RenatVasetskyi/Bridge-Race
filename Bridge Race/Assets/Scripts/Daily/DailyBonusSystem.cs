@@ -14,7 +14,7 @@ namespace Daily
         private const string IsDailyBonusGotSaveId = "IsDailyBonusGot";
         private const string DaysInARowSaveId = "DaysInARow";
 
-        private readonly List<int> _bonuses = new() { 1, 2, 3, 4, 5 };
+        private readonly List<int> _bonuses = new() { 50, 100, 150, 200, 250, 500, 1000 };
 
         [SerializeField] private Button _button;
 
@@ -59,7 +59,75 @@ namespace Daily
             else
                 Deactivate();
         }
+        
+        private void Open()
+        {
+            _isBonusGot = true;
+            
+            Deactivate();
+            
+            _audioService.PlaySfx(SfxType.UIClick);
 
+            if (IsYesterdayWasLastDayOfTakingBonus() & IsDaysInARowCountLessOrTheSameThanBonusCount())
+                AddDaysInARow();
+            else if(DateTime.Now.DayOfYear - 1 != _lastDay)
+                ResetDaysInARow();
+            
+            _currencyService.Earn(_bonuses[_daysInARow]);
+            
+            _lastDay = DateTime.Now.DayOfYear;
+            
+            _audioService.PlaySfx(SfxType.GetCoin);
+
+            ShowDailyBonusWindow();
+
+            Save();
+        }
+        
+        private bool CanActivate()
+        {
+            return _lastDay != DateTime.Now.DayOfYear ||
+                   (_lastDay == DateTime.Now.DayOfYear && _isBonusGot == false);
+        }
+        
+        private void Activate()
+        {
+            _button.gameObject.SetActive(true);
+            
+            _audioService.PlaySfx(SfxType.DailyBonusActivated);
+        }
+        
+        private void Deactivate()
+        {
+            _button.gameObject.SetActive(false);
+        }
+
+        private bool IsDaysInARowCountLessOrTheSameThanBonusCount()
+        {
+            return _daysInARow < _bonuses.Count - 1;
+        }
+
+        private bool IsYesterdayWasLastDayOfTakingBonus()
+        {
+            return DateTime.Now.DayOfYear - 1 == _lastDay;
+        }
+        
+        private void AddDaysInARow()
+        {
+            _daysInARow++;
+        }
+
+        private void ShowDailyBonusWindow()
+        {
+            _dailyBonusWindow.Initialize(_bonuses[_daysInARow]);
+            _dailyBonusWindow.gameObject.SetActive(true);
+        }
+        
+        private void ResetDaysInARow()
+        {
+            _daysInARow = 0;
+        }
+        
         private void Save()
         {
             _saveService.SaveInt(LastDaySaveId, _lastDay);
@@ -78,59 +146,6 @@ namespace Daily
 
             if (PlayerPrefs.HasKey(DaysInARowSaveId))
                 _daysInARow = _saveService.LoadInt(DaysInARowSaveId);
-        }
-
-        private void Open()
-        {
-            _isBonusGot = true;
-            
-            Deactivate();
-            
-            _audioService.PlaySfx(SfxType.UIClick);
-
-            if (DateTime.Now.DayOfYear - 1 == _lastDay & _daysInARow < _bonuses.Count - 1)
-                AddDaysInARow();
-            else if(DateTime.Now.DayOfYear - 1 != _lastDay)
-                ResetDaysInARow();
-            
-            _currencyService.Earn(_bonuses[_daysInARow]);
-            
-            _lastDay = DateTime.Now.DayOfYear;
-            
-            _audioService.PlaySfx(SfxType.GetCoin);
-
-            _dailyBonusWindow.Initialize(_bonuses[_daysInARow]);
-            _dailyBonusWindow.gameObject.SetActive(true);
-
-            Save();
-        }
-
-        private void Deactivate()
-        {
-            _button.gameObject.SetActive(false);
-        }
-
-        private void Activate()
-        {
-            _button.gameObject.SetActive(true);
-            
-            _audioService.PlaySfx(SfxType.DailyBonusActivated);
-        }
-        
-        private void ResetDaysInARow()
-        {
-            _daysInARow = 0;
-        }
-
-        private void AddDaysInARow()
-        {
-            _daysInARow++;
-        }
-
-        private bool CanActivate()
-        {
-            return _lastDay != DateTime.Now.DayOfYear ||
-                   (_lastDay == DateTime.Now.DayOfYear && _isBonusGot == false);
         }
     }
 }

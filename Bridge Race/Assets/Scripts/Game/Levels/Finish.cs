@@ -21,12 +21,17 @@ namespace Game.Levels
         {
             if (!_isDetected & other.gameObject.TryGetComponent(out IFinishDetectable finishDetectable))
             {
-                _isDetected = true;
-                
-                finishDetectable.DoFinishAnimation(transform);
-                
-                _levelProgressService.SetNextLevelToPass();
+                SetGameFinished(finishDetectable);
             }
+        }
+
+        private void SetGameFinished(IFinishDetectable finishDetectable)
+        {
+            _isDetected = true;
+                
+            finishDetectable.DoFinishAnimation(transform);
+                
+            _levelProgressService.SetNextLevelToPass();
         }
     }
 }

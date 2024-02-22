@@ -20,28 +20,32 @@ namespace UI.Settings
         private IAudioService _audioService;
         
         [Inject]
-        public void Construct(IAudioService audioService) =>
+        public void Construct(IAudioService audioService)
+        {
             _audioService = audioService;
+        }
 
         private void OnEnable()
         {
-            SetState();
+            SetImageSprite();
             
             _button.onClick.AddListener(ChangeState);
         }
 
-        private void OnDisable() => 
+        private void OnDisable()
+        {
             _button.onClick.RemoveListener(ChangeState);
+        }
 
-        private void SetState()
+        private void SetImageSprite()
         {
             switch (_type)
             {
                 case SoundType.Music:
-                    _image.sprite = _audioService.IsMusicOn ? _enabledSprite : _disabledSprite;
+                    SetImageSprite(_audioService.IsMusicOn ? _enabledSprite : _disabledSprite);
                     break;
                 case SoundType.Sound:
-                    _image.sprite = _audioService.IsSfxOn ? _enabledSprite : _disabledSprite;
+                    SetImageSprite(_audioService.IsSfxOn ? _enabledSprite : _disabledSprite);
                     break;
             }
         }
@@ -56,27 +60,32 @@ namespace UI.Settings
                     if (_audioService.IsSfxOn)
                     {
                         _audioService.ChangeVolume(_type, SoundVolumeType.Off);
-                        _image.sprite = _disabledSprite;
+                        SetImageSprite(_disabledSprite);
                     }
                     else
                     {
                         _audioService.ChangeVolume(_type, SoundVolumeType.On);
-                        _image.sprite = _enabledSprite;
+                        SetImageSprite(_enabledSprite);
                     }
                     break;
                 case SoundType.Music:
                     if (_audioService.IsMusicOn)
                     {
                         _audioService.ChangeVolume(_type, SoundVolumeType.Off);
-                        _image.sprite = _disabledSprite;
+                        SetImageSprite(_disabledSprite);
                     }
                     else
                     {
                         _audioService.ChangeVolume(_type, SoundVolumeType.On);
-                        _image.sprite = _enabledSprite;
+                        SetImageSprite(_enabledSprite);
                     }
                     break;
             }
+        }
+
+        private void SetImageSprite(Sprite sprite)
+        {
+            _image.sprite = sprite;
         }
     }
 }

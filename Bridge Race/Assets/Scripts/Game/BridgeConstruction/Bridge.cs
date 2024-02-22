@@ -12,7 +12,7 @@ namespace Game.BridgeConstruction
         
         public void MoveColliderToNextTileOrDisable()
         {
-            if (_currentColliderPosition < _tiles.Length - 1)
+            if (IsCurrentColliderPositionLessThanMax())
             {
                 _currentColliderPosition++;
 
@@ -20,13 +20,23 @@ namespace Game.BridgeConstruction
             }
             else
             {
-                _boxCollider.SetActive(false);
+                DisableCollider();
             }      
         }
-
+        
         private void Awake()
         {
             SetBoxColliderCurrentPosition();
+        }
+
+        private void DisableCollider()
+        {
+            _boxCollider.SetActive(false);
+        }
+
+        private bool IsCurrentColliderPositionLessThanMax()
+        {
+            return _currentColliderPosition < _tiles.Length - 1;
         }
 
         private void SetBoxColliderCurrentPosition()

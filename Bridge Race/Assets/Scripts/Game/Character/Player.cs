@@ -71,7 +71,7 @@ namespace Game.Character
         
         public void Collect(BridgeTile tile)
         {
-            if (_bridgeTiles.Count >= BridgeTileLimit)
+            if (HasMaxTiles())
                 return;
             
             tile.transform.SetParent(_bridgeTileHolder);
@@ -84,21 +84,24 @@ namespace Game.Character
             
             AnimateTile(tile);
         }
-        
+
+        private bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= BridgeTileLimit;
+        }
+
         public BridgeTile ExtractTile()
         {
             if (_bridgeTiles.Count > 0)
             {
-                BridgeTile tile = _bridgeTiles.Last();
-                
-                _bridgeTiles.Remove(tile);
+                BridgeTile tile = GetLastTileFromList();
 
                 return tile;
             }
 
             return null;
         }
-        
+
         public void DoFinishAnimation(Transform finish)
         {
             _rigidbody.isKinematic = true;
@@ -126,6 +129,15 @@ namespace Game.Character
         private void OnDestroy()
         {
             UnSubscribe();
+        }
+        
+        private BridgeTile GetLastTileFromList()
+        {
+            BridgeTile tile = _bridgeTiles.Last();
+
+            _bridgeTiles.Remove(tile);
+            
+            return tile;
         }
         
         private Vector3 GetNextTilePosition(BridgeTile tile)

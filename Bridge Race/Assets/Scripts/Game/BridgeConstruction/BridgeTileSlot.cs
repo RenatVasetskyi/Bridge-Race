@@ -30,14 +30,19 @@ namespace Game.BridgeConstruction
             {
                 _isEmpty = false;
                     
-                _meshRenderer.material = tile.Material;
+                EnableMeshRenderer(tile.Material);
 
-                _meshRenderer.enabled = true;
-                
                 _bridge.MoveColliderToNextTileOrDisable();
                     
                 Destroy(tile.gameObject);
             }
+        }
+
+        private void EnableMeshRenderer(Material materialToSet)
+        {
+            _meshRenderer.material = materialToSet;
+
+            _meshRenderer.enabled = true;
         }
     }
 }
