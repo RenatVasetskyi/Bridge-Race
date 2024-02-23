@@ -22,6 +22,15 @@ namespace Architecture.Installers
             BindCurrencyService();
             BindGamePauser();
             BindLevelProgressService();
+            BindUserDataStorage();
+        }
+        
+        private void BindUserDataStorage()
+        {
+            Container
+                .Bind<IUserDataStorage>()
+                .To<UserDataStorage>()
+                .AsSingle();
         }
         
         private void BindLevelProgressService()
