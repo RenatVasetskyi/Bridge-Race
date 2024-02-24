@@ -53,12 +53,12 @@ namespace Architecture.Services
             }
             else
             {
-                NativeGallery.GetImageFromGallery(CreateSpriteFromPathPhotoPath, 
+                NativeGallery.GetImageFromGallery(CreateSpriteFromPhotoPath, 
                     PhotoFromNativeGallery, FileTypeFromNativeGallery);
             }
         }
 
-        private void CreateSpriteFromPathPhotoPath(string path)
+        private void CreateSpriteFromPhotoPath(string path)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace Architecture.Services
                 
                 texture.LoadImage(imageInBytes); 
 
-                CreateSpriteFromLoadedPhoto(texture);
+                CreateSpriteFromTexture(texture);
             }
             catch (Exception exception)
             {
@@ -76,7 +76,7 @@ namespace Architecture.Services
             }
         }
 
-        private void CreateSpriteFromLoadedPhoto(Texture2D texture)
+        private void CreateSpriteFromTexture(Texture2D texture)
         {
             UserPhoto = Sprite.Create(texture, new Rect(0, 0, texture.width,
                 texture.height), Vector2.one * 0.5f); // 0.5f means center of image
