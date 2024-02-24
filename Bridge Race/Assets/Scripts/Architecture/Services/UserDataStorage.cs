@@ -19,8 +19,6 @@ namespace Architecture.Services
         private readonly ISaveService _saveService;
         private readonly GameSettings _gameSettings;
 
-        private readonly NativeGallery.MediaPickCallback _onPhotoPickFromGallery;
-
         public event Action OnNameChanged;
         public event Action<string> OnPickUserPhotoFromGalleryError;
         public event Action<Sprite> OnUserPhotoPickedFromGallery;
@@ -32,8 +30,6 @@ namespace Architecture.Services
         {
             _saveService = saveService;
             _gameSettings = gameSettings;
-
-            _onPhotoPickFromGallery = CreateSpriteFromPathPhotoPath;
         }
 
         public void SetUserName(string name)
@@ -57,7 +53,7 @@ namespace Architecture.Services
             }
             else
             {
-                NativeGallery.GetImageFromGallery(_onPhotoPickFromGallery, 
+                NativeGallery.GetImageFromGallery(CreateSpriteFromPathPhotoPath, 
                     PhotoFromNativeGallery, FileTypeFromNativeGallery);
             }
         }
