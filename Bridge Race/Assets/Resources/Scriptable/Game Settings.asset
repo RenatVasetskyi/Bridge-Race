@@ -57,9 +57,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  BridgeTileScript: {fileID: 8701757110265052559, guid: 0d8c8b894569ec3469e2a81504910803,
-    type: 3}
   Levels:
   - {fileID: 5830269870814203988, guid: 914c58434c1acda459012781a037f967, type: 3}
   PlayerData:
     Speed: 15
+  DefaultUserPhoto: {fileID: 21300000, guid: 84487d73ca4b791498332d8f6858417f, type: 3}

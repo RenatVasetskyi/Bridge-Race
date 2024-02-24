@@ -25,5 +25,7 @@ namespace Data
         [Header("Player")]
         
         public PlayerData PlayerData;
+
+        public Sprite DefaultUserPhoto;
     }
 }
