@@ -61,4 +61,4 @@ MonoBehaviour:
   - {fileID: 5830269870814203988, guid: 914c58434c1acda459012781a037f967, type: 3}
   PlayerData:
     Speed: 15
-  DefaultUserPhoto: {fileID: 21300000, guid: 84487d73ca4b791498332d8f6858417f, type: 3}
+  DefaultUserPhoto: {fileID: 21300000, guid: 48dbc3f715ebc43ceb7ceafa6b80a207, type: 3}
