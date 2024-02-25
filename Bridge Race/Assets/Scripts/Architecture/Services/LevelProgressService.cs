@@ -34,31 +34,31 @@ namespace Architecture.Services
             {
                 string lastPassedLevel = _saveService.LoadString(CurrentLevelToPassSaveId);
                 
-                CurrentLevelToPass = _gameSettings.Levels.FirstOrDefault(x => x
+                CurrentLevelToPass = _gameSettings.Prefabs.Levels.FirstOrDefault(x => x
                     .Type.ToString() == lastPassedLevel)!.Type;
             }
             else 
-                CurrentLevelToPass = _gameSettings.Levels.First().Type;
+                CurrentLevelToPass = _gameSettings.Prefabs.Levels.First().Type;
         }
 
         public Level GetCurrentLevelToPass()
         {
-            Level selectedLevel = _gameSettings.Levels.FirstOrDefault(x=> x.Type == CurrentLevelToPass);
+            Level selectedLevel = _gameSettings.Prefabs.Levels.FirstOrDefault(x=> x.Type == CurrentLevelToPass);
 
             if (selectedLevel != null)
                 return selectedLevel;
 
-            return _gameSettings.Levels.First();
+            return _gameSettings.Prefabs.Levels.First();
         }
 
         public void SetNextLevelToPass()
         {
             int currentLevelToPass = (int)GetCurrentLevelToPass().Type;
 
-            if (currentLevelToPass < _gameSettings.Levels.Length - 1 & 
+            if (currentLevelToPass < _gameSettings.Prefabs.Levels.Length - 1 & 
                 currentLevelToPass == (int)CurrentLevelToPass)
             {
-                CurrentLevelToPass = _gameSettings.Levels[currentLevelToPass + 1].Type;
+                CurrentLevelToPass = _gameSettings.Prefabs.Levels[currentLevelToPass + 1].Type;
                 
                 Save();
             }

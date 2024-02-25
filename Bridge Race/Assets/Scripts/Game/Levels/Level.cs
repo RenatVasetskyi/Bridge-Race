@@ -9,5 +9,6 @@ namespace Game.Levels
         public LevelType Type;
         public AssetReferenceGameObject Prefab;
         public Transform PlayerSpawnPoint;
+        public Finish Finish;
     }
 }

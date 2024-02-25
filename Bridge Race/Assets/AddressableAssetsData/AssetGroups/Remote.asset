@@ -69,6 +69,18 @@ MonoBehaviour:
     m_Address: LoadingCurtain
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 0d8c8b894569ec3469e2a81504910803
+    m_Address: BridgeTile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c7c4b4491947f47ba9c6f8dc53e9cbf5
+    m_Address: VictoryWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: af87971b7f7f2437ab31bbcd7a6c1828
+    m_Address: LoseWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:

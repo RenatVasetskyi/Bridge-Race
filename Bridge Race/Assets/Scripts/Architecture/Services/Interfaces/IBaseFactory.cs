@@ -20,5 +20,6 @@ namespace Architecture.Services.Interfaces
         Task<GameObject> CreateAddressableWithObject(AssetReferenceGameObject assetReference, Vector3 at,
             Quaternion rotation, Transform parent);
         void CreateLoadingCurtain(AssetReferenceGameObject prefab);
+        void CreateGameOverWindow(AssetReferenceGameObject prefab, Transform parent);
     }
 }

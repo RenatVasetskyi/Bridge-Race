@@ -86,5 +86,20 @@ namespace Architecture.Services
             
             LoadingCurtain.Show();  
         }
+
+        public async void CreateGameOverWindow(AssetReferenceGameObject prefab, Transform parent)
+        {
+            RectTransform window = (await CreateAddressableWithContainer(prefab,
+                Vector3.zero, Quaternion.identity, parent)).GetComponent<RectTransform>();
+            
+            window.anchorMin = Vector2.zero;
+            window.anchorMax = Vector2.one;
+            window.sizeDelta = Vector2.zero;
+            
+            window.transform.localScale = Vector3.one;
+            window.transform.localPosition = Vector3.zero;
+            
+            window.gameObject.SetActive(true);
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Architecture.States
 
         public void Enter()
         {
-            _baseFactory.CreateLoadingCurtain(_gameSettings.LoadingCurtain);
+            _baseFactory.CreateLoadingCurtain(_gameSettings.Prefabs.LoadingCurtain);
             
             _sceneLoader.Load(GameScene, Initialize);
         }
@@ -57,26 +57,29 @@ namespace Architecture.States
             _gamePauser.SetPause(false);
             
             Transform parent = (await _baseFactory.CreateAddressableWithObject
-                (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
+                (_gameSettings.Prefabs.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
             Camera gameCamera = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.GameCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+                (_gameSettings.Prefabs.GameCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             Camera uiCamera = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.UICamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+                (_gameSettings.Prefabs.UICamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             UniversalAdditionalCameraData cameraData = gameCamera.GetComponent<UniversalAdditionalCameraData>();
             cameraData.cameraStack.Add(uiCamera);
             
             GameView gameView = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
+                (_gameSettings.Prefabs.GameView, Vector3.zero, Quaternion.identity, parent)).GetComponent<GameView>();
             gameView.GetComponent<Canvas>().worldCamera = uiCamera;
             
             Level level = (await _baseFactory.CreateAddressableWithContainer
-                (_levelProgressService.GetCurrentLevelToPass().Prefab, Vector3.zero, Quaternion.identity, parent)).GetComponent<Level>();
+                (_levelProgressService.GetCurrentLevelToPass().Prefab,
+                    Vector3.zero, Quaternion.identity, parent)).GetComponent<Level>();
+            
+            gameView.Initialize(level.Finish);
             
             Player player = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.Player, level.PlayerSpawnPoint.position, Quaternion.identity, parent))
+                (_gameSettings.Prefabs.Player, level.PlayerSpawnPoint.position, Quaternion.identity, parent))
                 .GetComponent<Player>();
             player.Initialize(gameView.Joystick);
             

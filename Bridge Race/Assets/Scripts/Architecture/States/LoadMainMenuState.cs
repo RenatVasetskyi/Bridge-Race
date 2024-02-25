@@ -36,7 +36,7 @@ namespace Architecture.States
 
         public void Enter()
         {
-            _baseFactory.CreateLoadingCurtain(_gameSettings.LoadingCurtain);
+            _baseFactory.CreateLoadingCurtain(_gameSettings.Prefabs.LoadingCurtain);
 
             _sceneLoader.Load(MainMenuScene, Initialize);
         }
@@ -44,13 +44,13 @@ namespace Architecture.States
         private async void Initialize()
         {
             Transform parent = (await _baseFactory.CreateAddressableWithObject
-                (_gameSettings.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
+                (_gameSettings.Prefabs.BaseParent, Vector3.zero, Quaternion.identity, null)).transform;
 
             Camera camera = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.MainMenuCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
+                (_gameSettings.Prefabs.MainMenuCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
             Canvas mainMenu = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.MainMenu, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();
+                (_gameSettings.Prefabs.MainMenu, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();
             mainMenu.worldCamera = camera;
             
             _audioService.PlayMusic(MusicType.MainMenu);

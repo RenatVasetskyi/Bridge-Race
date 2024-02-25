@@ -1,12 +1,17 @@
+using System;
 using Architecture.Services.Interfaces;
 using Game.Character.Interfaces;
+using Game.Levels.Interfaces;
 using UnityEngine;
 using Zenject;
 
 namespace Game.Levels
 {
-    public class Finish : MonoBehaviour
+    public class Finish : MonoBehaviour, IGameOverReporter
     {
+        public event Action OnWin;
+        public event Action OnLose;
+        
         private ILevelProgressService _levelProgressService;
 
         private bool _isDetected;
@@ -32,6 +37,8 @@ namespace Game.Levels
             finishDetectable.DoFinishAnimation(transform);
                 
             _levelProgressService.SetNextLevelToPass();
+            
+            OnWin?.Invoke();
         }
     }
 }
