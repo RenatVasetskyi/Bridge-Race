@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Architecture.Services.Interfaces;
-using UI.Base;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Zenject;
@@ -12,9 +11,7 @@ namespace Architecture.Services
         private readonly DiContainer _container;
         private readonly IAssetProvider _assetProvider;
 
-        public LoadingCurtain LoadingCurtain { get; private set; }
-
-        public BaseFactory(DiContainer container, IAssetProvider assetProvider)
+        protected BaseFactory(DiContainer container, IAssetProvider assetProvider)
         {
             _container = container;
             _assetProvider = assetProvider;
@@ -70,36 +67,6 @@ namespace Architecture.Services
             GameObject loadedResource = await _assetProvider.Load<GameObject>(assetReference);
             
             return Object.Instantiate(loadedResource, at, rotation, parent);
-        }
-
-        public async void CreateLoadingCurtain(AssetReferenceGameObject prefab)
-        {
-            if (LoadingCurtain != null)
-            {
-                LoadingCurtain.Show();
-                
-                return;
-            }
-            
-            LoadingCurtain = (await CreateAddressableWithContainer(prefab,
-                Vector3.zero, Quaternion.identity, null)).GetComponent<LoadingCurtain>();
-            
-            LoadingCurtain.Show();  
-        }
-
-        public async void CreateGameOverWindow(AssetReferenceGameObject prefab, Transform parent)
-        {
-            RectTransform window = (await CreateAddressableWithContainer(prefab,
-                Vector3.zero, Quaternion.identity, parent)).GetComponent<RectTransform>();
-            
-            window.anchorMin = Vector2.zero;
-            window.anchorMax = Vector2.one;
-            window.sizeDelta = Vector2.zero;
-            
-            window.transform.localScale = Vector3.one;
-            window.transform.localPosition = Vector3.zero;
-            
-            window.gameObject.SetActive(true);
         }
     }
 }

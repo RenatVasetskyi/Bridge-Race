@@ -1,3 +1,4 @@
+using System;
 using Architecture.Services.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,9 +6,9 @@ using Zenject;
 
 namespace UI.Settings
 {
-    public class UserPhotoPicker : MonoBehaviour
+    public class UserPhotoDisplayer : MonoBehaviour
     {
-        [SerializeField] private Button _pickButton;
+        [SerializeField] private Image _image;
         
         private IUserDataStorage _userDataStorage;
         
@@ -16,15 +17,22 @@ namespace UI.Settings
         {
             _userDataStorage = userDataStorage;
         }
-
+        
         private void OnEnable()
         {
-            _pickButton.onClick.AddListener(_userDataStorage.PickPhotoFromNativeGallery);
+            SetPickedPhoto(_userDataStorage.UserPhoto);
+
+            _userDataStorage.OnUserPhotoPickedFromGallery += SetPickedPhoto;
         }
 
         private void OnDisable()
         {
-            _pickButton.onClick.RemoveListener(_userDataStorage.PickPhotoFromNativeGallery);
+            _userDataStorage.OnUserPhotoPickedFromGallery -= SetPickedPhoto;
+        }
+
+        private void SetPickedPhoto(Sprite photo)
+        {
+            _image.sprite = photo;
         }
     }
 }

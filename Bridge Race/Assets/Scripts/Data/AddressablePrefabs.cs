@@ -7,7 +7,8 @@ namespace Data
     [Serializable]
     public class AddressablePrefabs
     {
-        public AssetReferenceGameObject MainMenu;
+        public Level[] Levels;
+        public AssetReferenceGameObject BaseCanvas;
         public AssetReferenceGameObject GameView;
         public AssetReferenceGameObject BaseParent;
         public AssetReferenceGameObject Player;
@@ -18,6 +19,8 @@ namespace Data
         public AssetReferenceGameObject BridgeTile;
         public AssetReferenceGameObject VictoryWindow;
         public AssetReferenceGameObject LoseWindow;
-        public Level[] Levels;
+        public AssetReferenceGameObject EditNameWindow;
+        public AssetReferenceGameObject SettingsWindow;
+        public AssetReferenceGameObject MainMenuWindow;
     }
 }

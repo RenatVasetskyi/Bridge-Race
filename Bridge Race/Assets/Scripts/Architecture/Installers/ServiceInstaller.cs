@@ -17,6 +17,7 @@ namespace Architecture.Installers
             BindSceneLoader();
             BindAssetProvider();
             BindBaseFactory();
+            BindUIFactory();
             BindSaveService();
             BindAudioService();
             BindCurrencyService();
@@ -80,6 +81,14 @@ namespace Architecture.Installers
                 .To<AudioService>()
                 .AsSingle()
                 .NonLazy();
+        }
+        
+        private void BindUIFactory()
+        {
+            Container
+                .Bind<IUIFactory>()
+                .To<UIFactory>()
+                .AsSingle();
         }
         
         private void BindBaseFactory()

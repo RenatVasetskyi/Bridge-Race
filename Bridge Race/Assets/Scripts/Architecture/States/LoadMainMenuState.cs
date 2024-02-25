@@ -13,16 +13,18 @@ namespace Architecture.States
         private readonly ISceneLoader _sceneLoader;
         private readonly IAudioService _audioService;
         private readonly IBaseFactory _baseFactory;
+        private readonly IUIFactory _uiFactory;
         private readonly GameSettings _gameSettings;
         private readonly IAssetProvider _assetProvider;
 
         public LoadMainMenuState(ISceneLoader sceneLoader, IAudioService audioService, 
-            IBaseFactory baseFactory, GameSettings gameSettings, 
+            IBaseFactory baseFactory, IUIFactory uiFactory, GameSettings gameSettings, 
             IAssetProvider assetProvider)
         {
             _sceneLoader = sceneLoader;
             _audioService = audioService;
             _baseFactory = baseFactory;
+            _uiFactory = uiFactory;
             _gameSettings = gameSettings;
             _assetProvider = assetProvider;
         }
@@ -36,7 +38,7 @@ namespace Architecture.States
 
         public void Enter()
         {
-            _baseFactory.CreateLoadingCurtain(_gameSettings.Prefabs.LoadingCurtain);
+            _uiFactory.CreateLoadingCurtain();
 
             _sceneLoader.Load(MainMenuScene, Initialize);
         }
@@ -49,14 +51,16 @@ namespace Architecture.States
             Camera camera = (await _baseFactory.CreateAddressableWithContainer
                 (_gameSettings.Prefabs.MainMenuCamera, Vector3.zero, Quaternion.identity, parent)).GetComponent<Camera>();
             
-            Canvas mainMenu = (await _baseFactory.CreateAddressableWithContainer
-                (_gameSettings.Prefabs.MainMenu, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();
-            mainMenu.worldCamera = camera;
+            Canvas mainMenuCanvas = (await _baseFactory.CreateAddressableWithContainer
+                (_gameSettings.Prefabs.BaseCanvas, Vector3.zero, Quaternion.identity, parent)).GetComponent<Canvas>();
+            mainMenuCanvas.worldCamera = camera;
+            
+            _uiFactory.CreateFullScreenWindow(_gameSettings.Prefabs.MainMenuWindow, mainMenuCanvas.transform);
             
             _audioService.PlayMusic(MusicType.MainMenu);
 
-            if (_baseFactory.LoadingCurtain != null)
-                _baseFactory.LoadingCurtain.Hide();
+            if (_uiFactory.LoadingCurtain != null)
+                _uiFactory.LoadingCurtain.Hide();
         }
     }
 }

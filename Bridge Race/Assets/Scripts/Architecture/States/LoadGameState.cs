@@ -19,19 +19,21 @@ namespace Architecture.States
         private readonly IGamePauser _gamePauser;
         private readonly IAudioService _audioService;
         private readonly IBaseFactory _baseFactory;
+        private readonly IUIFactory _uiFactory;
         private readonly IAssetProvider _assetProvider;
         private readonly GameSettings _gameSettings;
         private readonly ILevelProgressService _levelProgressService;
 
         public LoadGameState(ISceneLoader sceneLoader, IGamePauser gamePauser,
-            IAudioService audioService, IBaseFactory baseFactory, 
-            IAssetProvider assetProvider, GameSettings gameSettings, 
-            ILevelProgressService levelProgressService)
+            IAudioService audioService, IBaseFactory baseFactory,
+            IUIFactory uiFactory, IAssetProvider assetProvider,
+            GameSettings gameSettings, ILevelProgressService levelProgressService)
         {
             _sceneLoader = sceneLoader;
             _gamePauser = gamePauser;
             _audioService = audioService;
             _baseFactory = baseFactory;
+            _uiFactory = uiFactory;
             _assetProvider = assetProvider;
             _gameSettings = gameSettings;
             _levelProgressService = levelProgressService;
@@ -46,7 +48,7 @@ namespace Architecture.States
 
         public void Enter()
         {
-            _baseFactory.CreateLoadingCurtain(_gameSettings.Prefabs.LoadingCurtain);
+            _uiFactory.CreateLoadingCurtain();
             
             _sceneLoader.Load(GameScene, Initialize);
         }
@@ -88,8 +90,8 @@ namespace Architecture.States
 
             _audioService.PlayMusic(MusicType.Game);
 
-            if (_baseFactory.LoadingCurtain != null)
-                _baseFactory.LoadingCurtain.Hide();
+            if (_uiFactory.LoadingCurtain != null)
+                _uiFactory.LoadingCurtain.Hide();
         }
     }
 }

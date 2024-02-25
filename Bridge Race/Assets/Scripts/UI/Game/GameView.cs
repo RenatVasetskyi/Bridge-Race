@@ -14,15 +14,15 @@ namespace UI.Game
         [SerializeField] private AnimatedHand _animatedHand;
         [SerializeField] private GameObject _tutorial;
 
-        private IBaseFactory _baseFactory;
+        private IUIFactory _uiFactory;
         private GameSettings _gameSettings;
         
         private IGameOverReporter _gameOverReporter;
         
         [Inject]
-        public void Construct(IBaseFactory baseFactory, GameSettings gameSettings)
+        public void Construct(IUIFactory uiFactory, GameSettings gameSettings)
         {
-            _baseFactory = baseFactory;
+            _uiFactory = uiFactory;
             _gameSettings = gameSettings;
         }
         
@@ -64,12 +64,12 @@ namespace UI.Game
 
         private void ShowVictoryWindow()
         {
-            _baseFactory.CreateGameOverWindow(_gameSettings.Prefabs.VictoryWindow, transform);
+            _uiFactory.CreateFullScreenWindow(_gameSettings.Prefabs.VictoryWindow, transform);
         }
 
         private void ShowLoseWindow()
         {
-            _baseFactory.CreateGameOverWindow(_gameSettings.Prefabs.LoseWindow, transform);
+            _uiFactory.CreateFullScreenWindow(_gameSettings.Prefabs.LoseWindow, transform);
         }
 
         private void Subscribe()
