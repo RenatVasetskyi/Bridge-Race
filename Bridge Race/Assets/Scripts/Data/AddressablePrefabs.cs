@@ -22,5 +22,6 @@ namespace Data
         public AssetReferenceGameObject EditNameWindow;
         public AssetReferenceGameObject SettingsWindow;
         public AssetReferenceGameObject MainMenuWindow;
+        public AssetReferenceGameObject Bot;
     }
 }

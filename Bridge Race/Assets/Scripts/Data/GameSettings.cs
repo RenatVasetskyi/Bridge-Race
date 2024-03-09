@@ -1,7 +1,6 @@
+using Game.Character.AI;
 using Game.Character.Data;
-using Game.Levels;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Data
 {
@@ -15,5 +14,8 @@ namespace Data
         public PlayerData PlayerData;
 
         public Sprite DefaultUserPhoto;
+        
+        [Header("Bot")]
+        public BotData BotData;
     }
 }

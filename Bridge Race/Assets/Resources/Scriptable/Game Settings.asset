@@ -85,6 +85,13 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+    Bot:
+      m_AssetGUID: f15d4f4a40dcd4bb783e1f0b190f0355
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   PlayerData:
     Speed: 15
   DefaultUserPhoto: {fileID: 21300000, guid: d2c149dc33065402eaaea8b6a70a7361, type: 3}
+  BotData:
+    Speed: 15

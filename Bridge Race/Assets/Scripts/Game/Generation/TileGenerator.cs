@@ -47,15 +47,15 @@ namespace Game.Generation
 
         private async void SpawnTile()
         {
-            BridgeTile createdTile = (await _baseFactory.CreateAddressableWithContainer
+            _currentTile = (await _baseFactory.CreateAddressableWithContainer
             (_gameSettings.Prefabs.BridgeTile, Vector3.zero, Quaternion.identity, transform))
                 .GetComponent<BridgeTile>();
 
-            createdTile.transform.position = transform.position;
+            _currentTile.transform.position = transform.position;
             
-            createdTile.Initialize(this);
+            _currentTile.Initialize(this);
             
-            _platform.Tiles.Add(createdTile);
+            _platform.Tiles.Add(_currentTile);
         }
     }
 }

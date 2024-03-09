@@ -924,16 +924,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 273039973894338561}
-  _animator: {fileID: 7141849014246767203}
   _bridgeTileHolder: {fileID: 2817977818354725184}
   _climbRaycastOrigin: {fileID: 1161051265536181482}
+  _tileAnimationEasing: 26
   _stepLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  _tileAnimationEasing: 26
+  _animator: {fileID: 7141849014246767203}
 --- !u!1 &5048080878361441810
 GameObject:
   m_ObjectHideFlags: 0

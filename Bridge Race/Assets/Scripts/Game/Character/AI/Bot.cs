@@ -1,8 +1,11 @@
+using System.Collections.Specialized;
+using Data;
 using Game.Character.AI.States;
 using Game.Character.StateMachine;
 using Game.Character.StateMachine.Interfaces;
 using Game.Generation;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Character.AI
 {
@@ -10,48 +13,82 @@ namespace Game.Character.AI
     {
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
 
+        private BotData _data;
+        
         public Platform CurrentPlatform { get; private set; }
 
-        public void Initialize(Platform startPlatform)
+        [Inject]
+        public void Construct(GameSettings gameSettings)
         {
-            CurrentPlatform = startPlatform;
+            _data = gameSettings.BotData;
         }
         
-        private void Awake()
+        public void Initialize(Platform startPlatform)
         {
-            StateFactory stateFactory = new StateFactory(_stateMachine, this, _rigidbody);
+            ChangeCurrentPlatform(startPlatform);
+            
+            StateFactory stateFactory = new StateFactory
+                (_stateMachine, this, _rigidbody, _data);
             
             _stateMachine.EnterState<BotCollectBridgeTilesState>();
         }
-
+        
         private void Update()
         {
-            _stateMachine.ActiveState.FrameUpdate();
+            _stateMachine.ActiveState?.FrameUpdate();
         }
 
         private void FixedUpdate()
         {
-            _stateMachine.ActiveState.PhysicsUpdate();
+            _stateMachine.ActiveState?.PhysicsUpdate();
             
             Climb();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnDestroy()
         {
+            if (CurrentPlatform != null)
+                CurrentPlatform.Tiles.CollectionChanged -= IfCurrentStateIsIdleTryToEnterCollectBridgeTileState;
         }
-        
+
+        private void ChangeCurrentPlatform(Platform platform)
+        {
+            if (CurrentPlatform != null)
+            {
+                CurrentPlatform.Tiles.CollectionChanged -= IfCurrentStateIsIdleTryToEnterCollectBridgeTileState;
+            }
+            
+            CurrentPlatform = platform;
+
+            CurrentPlatform.Tiles.CollectionChanged += IfCurrentStateIsIdleTryToEnterCollectBridgeTileState;
+        }
+
+        private void IfCurrentStateIsIdleTryToEnterCollectBridgeTileState
+            (object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_stateMachine.CompareStateWithActive<BotIdleState>())
+            {
+                if (CurrentPlatform.Tiles.Count > 0)
+                {
+                    _stateMachine.EnterState<BotCollectBridgeTilesState>();
+                }
+            }
+        }
+
         private class StateFactory
         {
             private readonly ICharacterStateMachine _stateMachine;
             private readonly Bot _bot;
             private readonly Rigidbody _rigidbody;
+            private readonly BotData _botData;
 
             public StateFactory(ICharacterStateMachine stateMachine, Bot bot,
-                Rigidbody rigidbody) 
+                Rigidbody rigidbody, BotData botData) 
             {
                 _stateMachine = stateMachine;
                 _bot = bot;
                 _rigidbody = rigidbody;
+                _botData = botData;
 
                 CreateStates();
             }
@@ -71,7 +108,7 @@ namespace Game.Character.AI
             private void CreateCollectBridgeTilesState()
             {
                 _stateMachine.AddState<BotCollectBridgeTilesState>(new 
-                    BotCollectBridgeTilesState(_stateMachine, _bot, _rigidbody));
+                    BotCollectBridgeTilesState(_stateMachine, _bot, _rigidbody, _botData));
             }
 
             private void CreateDeliverTileToBridgeState()

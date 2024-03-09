@@ -1,9 +1,11 @@
+using System.Linq;
 using Architecture.Services.Interfaces;
 using Architecture.States.Interfaces;
 using Audio;
 using Data;
 using Game.Camera;
 using Game.Character;
+using Game.Character.AI;
 using Game.Levels;
 using UI.Game;
 using UnityEngine;
@@ -84,6 +86,11 @@ namespace Architecture.States
                 (_gameSettings.Prefabs.Player, level.PlayerSpawnPoint.position, Quaternion.identity, parent))
                 .GetComponent<Player>();
             player.Initialize(gameView.Joystick);
+            
+            Bot bot = (await _baseFactory.CreateAddressableWithContainer
+                    (_gameSettings.Prefabs.Bot, level.BotSpawnPoint.position, Quaternion.identity, parent))
+                .GetComponent<Bot>();
+            bot.Initialize(level.Platforms.First());
             
             CameraFollowTarget cameraFollowTarget = gameCamera.GetComponent<CameraFollowTarget>();
             cameraFollowTarget.Initialize(player.transform);

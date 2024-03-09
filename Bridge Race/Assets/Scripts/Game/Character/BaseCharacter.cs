@@ -1,19 +1,75 @@
+using System.Collections.Generic;
+using System.Linq;
+using Game.BridgeConstruction;
+using Game.Character.Interfaces;
 using UnityEngine;
 
 namespace Game.Character
 {
-    public abstract class BaseCharacter : MonoBehaviour
+    public abstract class BaseCharacter : MonoBehaviour, IBridgeTileCollectable, IFinishDetectable
     {
-        private const float StepRayDistance = 3f;
-
-        [SerializeField] protected Rigidbody _rigidbody;
+        private const float FinishAnimationDuration = 1f;
         
+        private const int BridgeTileLimit = 30;
+        
+        private const float MoveTileDuration = 0.15f;
+        
+        private const float StepRayDistance = 3f;
+        
+        private readonly List<BridgeTile> _bridgeTiles = new();
+
+        [Header("Components")]        
+        
+        [SerializeField] protected Rigidbody _rigidbody;
+        [SerializeField] protected Transform _bridgeTileHolder;
         [SerializeField] private Transform _climbRaycastOrigin;
+
+        [Header("Tile Animation")] 
+        
+        [SerializeField] private LeanTweenType _tileAnimationEasing;
         
         [Header("Layers")]
         
         [SerializeField] private LayerMask _stepLayer;
         [SerializeField] private LayerMask _groundLayer;
+        
+        public void Collect(BridgeTile tile)
+        {
+            if (HasMaxTiles())
+                return;
+            
+            tile.transform.SetParent(_bridgeTileHolder);
+
+            ResetRotation(tile.transform);
+            
+            tile.Position = GetNextTilePosition(tile);
+            
+            _bridgeTiles.Add(tile);
+            
+            AnimateTile(tile);
+        }
+        
+        public BridgeTile ExtractTile()
+        {
+            if (_bridgeTiles.Count > 0)
+            {
+                BridgeTile tile = GetLastTileFromList();
+
+                return tile;
+            }
+
+            return null;
+        }
+        
+        public virtual void DoFinishAnimation(Transform finish)
+        {
+            _rigidbody.isKinematic = true;
+            
+            _bridgeTileHolder.gameObject.SetActive(false);
+
+            LeanTween.scale(gameObject, Vector3.zero, FinishAnimationDuration);
+            LeanTween.move(gameObject, finish.position, FinishAnimationDuration);
+        }
         
         protected void Climb()
         {
@@ -28,6 +84,50 @@ namespace Game.Character
                 
                 _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
             }
+        }
+        
+        private BridgeTile GetLastTileFromList()
+        {
+            BridgeTile tile = _bridgeTiles.Last();
+
+            _bridgeTiles.Remove(tile);
+            
+            return tile;
+        }
+        
+        private bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= BridgeTileLimit;
+        }
+        
+        private Vector3 GetNextTilePosition(BridgeTile tile)
+        {
+            Vector3 tilePosition;
+
+            if (_bridgeTiles.Count == 0)
+            {
+                tilePosition = _bridgeTileHolder.localPosition; 
+            }
+            else
+            {
+                tilePosition = _bridgeTiles.Last().Position + new Vector3
+                    (0, tile.MeshRenderer.bounds.extents.y / 2, 0);
+            }
+            
+            return tilePosition;
+        }
+        
+        private void AnimateTile(BridgeTile tile)
+        {
+            LeanTween.moveLocal(tile.gameObject, new Vector3(tile.MeshRenderer.bounds.extents.x,
+                    tile.Position.y, 0), MoveTileDuration).setEase(_tileAnimationEasing)
+                .setOnComplete(() => LeanTween.moveLocalX(tile.gameObject, 0, MoveTileDuration)
+                    .setEase(_tileAnimationEasing));
+        }
+        
+        private void ResetRotation(Transform transform)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 0);
         }
     }
 }

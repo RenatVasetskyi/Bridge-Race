@@ -8,30 +8,27 @@ namespace Game.Character.AI.States
 {
     public class BotCollectBridgeTilesState : ICharacterState
     {
+        private const float StopThreshold = 0.05f;
+        
         private readonly ICharacterStateMachine _stateMachine;
         private readonly Bot _bot;
         private readonly Rigidbody _rigidbody;
+        private readonly BotData _botData;
+
+        private BridgeTile _closestTile;
 
         public BotCollectBridgeTilesState(ICharacterStateMachine stateMachine, Bot bot,
-            Rigidbody rigidbody)
+            Rigidbody rigidbody, BotData botData)
         {
             _stateMachine = stateMachine;
             _bot = bot;
             _rigidbody = rigidbody;
+            _botData = botData;
         }
         
         public void Enter()
         {
-            BridgeTile closestTile = GetClosestTile();
-
-            if (closestTile != null)
-            {
-                
-            }
-            else
-            {
-                _stateMachine.EnterState<BotIdleState>();
-            }
+            SetClosestTileOrEnterIdleState();
         }
 
         public void Exit()
@@ -44,6 +41,15 @@ namespace Game.Character.AI.States
 
         public void PhysicsUpdate()
         {
+            MoveToClosestTile();
+        }
+        
+        private void SetClosestTileOrEnterIdleState()
+        {
+            _closestTile = GetClosestTile();
+
+            if (_closestTile == null)
+                _stateMachine.EnterState<BotIdleState>();
         }
         
         private BridgeTile GetClosestTile()
@@ -58,7 +64,7 @@ namespace Game.Character.AI.States
             float closestDistance = Vector3.Distance
                 (_bot.transform.position, closestTile.transform.position);
             
-            foreach (BridgeTile bridgeTile in _bot.CurrentPlatform.Tiles.ToList())
+            foreach (BridgeTile bridgeTile in tilesOnPlatform)
             {
                 float distanceToCurrentTile = Vector3.Distance(_bot.transform.position, bridgeTile.transform.position);
 
@@ -73,8 +79,23 @@ namespace Game.Character.AI.States
             return closestTile;
         }
 
-        private void MoveToClosestTile(Transform tile)
+        private void MoveToClosestTile()
         {
+            if (_closestTile != null)
+            {
+                Vector3 direction = (_closestTile.transform.position - _bot.transform.position).normalized;
+            
+                _rigidbody.velocity = direction * _botData.Speed;
+
+                if (IsBotNearClosestTile())
+                    SetClosestTileOrEnterIdleState();
+            }
+        }
+
+        private bool IsBotNearClosestTile()
+        {
+            return Vector3.Distance(new Vector3(_rigidbody.position.x, 0, _rigidbody.position.z),
+                new Vector3(_closestTile.transform.position.x, 0, _closestTile.transform.position.z)) <= StopThreshold;
         }
     }
 }

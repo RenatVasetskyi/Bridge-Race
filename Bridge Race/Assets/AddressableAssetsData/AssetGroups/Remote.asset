@@ -89,6 +89,10 @@ MonoBehaviour:
     m_Address: BaseCanvas
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f15d4f4a40dcd4bb783e1f0b190f0355
+    m_Address: Bot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6bfd944763820b1428c335e329c3326f, type: 2}
   m_SchemaSet:
