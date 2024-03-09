@@ -12,8 +12,12 @@ namespace Game.Generation
     {
         private const float RegenerationTileDelay = 3f;
 
+        [SerializeField] private Platform _platform;
+        
         private IBaseFactory _baseFactory;
         private GameSettings _gameSettings;
+
+        private BridgeTile _currentTile;
 
         [Inject]
         public void Construct(IBaseFactory baseFactory, GameSettings gameSettings)
@@ -24,6 +28,8 @@ namespace Game.Generation
         
         public void RegenerateTile()
         {
+            _platform.Tiles.Remove(_currentTile);
+            
             StartCoroutine(Generate(RegenerationTileDelay));
         }
 
@@ -48,6 +54,8 @@ namespace Game.Generation
             createdTile.transform.position = transform.position;
             
             createdTile.Initialize(this);
+            
+            _platform.Tiles.Add(createdTile);
         }
     }
 }

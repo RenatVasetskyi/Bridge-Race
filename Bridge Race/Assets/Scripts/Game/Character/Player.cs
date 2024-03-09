@@ -14,15 +14,13 @@ using Zenject;
 
 namespace Game.Character
 {
-    public class Player : MonoBehaviour, IBridgeTileCollectable, IFinishDetectable
+    public class Player : BaseCharacter, IBridgeTileCollectable, IFinishDetectable
     {
         private const int BridgeTileLimit = 30;
         
         private const int FinishAnimationDuration = 1;
         
         private const float MoveTileDuration = 0.15f;
-        
-        private const float StepRayDistance = 3f;
  
         private readonly List<BridgeTile> _bridgeTiles = new();
         
@@ -30,15 +28,8 @@ namespace Game.Character
 
         [Header("Components")]
         
-        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _bridgeTileHolder;
-        [SerializeField] private Transform _climbRaycastOrigin;
-
-        [Header("Layers")]
-        
-        [SerializeField] private LayerMask _stepLayer;
-        [SerializeField] private LayerMask _groundLayer;
 
         [Header("Tile Animation")] 
         
@@ -168,21 +159,6 @@ namespace Game.Character
         private void ResetRotation(Transform transform)
         {
             transform.rotation = new Quaternion(0, 0, 0, 0);
-        }
-
-        private void Climb()
-        {
-            RaycastHit hit;
-
-            if (Physics.Raycast(_climbRaycastOrigin.position, transform.TransformDirection(-Vector3.up),
-                    out hit, StepRayDistance, _stepLayer | _groundLayer))
-            {
-                Vector3 targetVector = new Vector3(_rigidbody.position.x, hit.point.y, _rigidbody.position.z);   
-
-                _rigidbody.position = targetVector;
-                
-                _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-            }
         }
 
         private void Subscribe()
