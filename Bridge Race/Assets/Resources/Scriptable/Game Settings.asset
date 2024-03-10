@@ -97,4 +97,4 @@ MonoBehaviour:
   BotData:
     Speed: 8
     MaxTilesInHands: 20
-    RotationSpeed: 500
+    RotationSpeed: 8

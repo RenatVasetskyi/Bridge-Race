@@ -107,7 +107,12 @@ namespace Game.Character.AI.States
 
         private void Rotate(Vector3 direction)
         {
-            _bot.transform.rotation = Quaternion.LookRotation(direction);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            Quaternion rotation = Quaternion.Lerp(_bot.transform.rotation,
+                targetRotation, _botData.RotationSpeed * Time.deltaTime);
+
+            _bot.transform.rotation = rotation;
         }
 
         private bool IsBotNearClosestTile()
