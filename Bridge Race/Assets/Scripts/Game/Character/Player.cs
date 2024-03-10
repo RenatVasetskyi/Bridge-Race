@@ -17,17 +17,17 @@ namespace Game.Character
         [Header("Components")]
         
         [SerializeField] private Animator _animator;
-
-        private GameSettings _gameSettings;
         
         private IInputController _inputController;
         
         private PlayerAnimator _playerAnimator;
+        
+        private PlayerData _data;
 
         [Inject]
         public void Construct(GameSettings gameSettings)
         {
-            _gameSettings = gameSettings;
+            _data = gameSettings.PlayerData;
         }
         
         public void Initialize(IInputController inputController)
@@ -36,7 +36,7 @@ namespace Game.Character
             _playerAnimator = new PlayerAnimator(_animator);
             
             StateFactory stateFactory = new StateFactory
-                (_stateMachine, _inputController, _rigidbody, _gameSettings.PlayerData, _playerAnimator);
+                (_stateMachine, _inputController, _rigidbody, _data, _playerAnimator);
 
             Subscribe();
             
@@ -65,6 +65,11 @@ namespace Game.Character
         private void OnDestroy()
         {
             UnSubscribe();
+        }
+        
+        protected override bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= _data.MaxTilesInHands;
         }
 
         private void Subscribe()

@@ -1198,6 +1198,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _animator: {fileID: 3902766431071155408}
 --- !u!1 &1385943235722980007
 GameObject:
   m_ObjectHideFlags: 0

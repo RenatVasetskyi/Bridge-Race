@@ -6,5 +6,6 @@ namespace Game.Character.Data
     public class PlayerData
     {
         public float Speed;
+        public int MaxTilesInHands;
     }
 }

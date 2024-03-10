@@ -10,13 +10,11 @@ namespace Game.Character
     {
         private const float FinishAnimationDuration = 1f;
         
-        private const int BridgeTileLimit = 30;
-        
         private const float MoveTileDuration = 0.15f;
         
         private const float StepRayDistance = 3f;
         
-        private readonly List<BridgeTile> _bridgeTiles = new();
+        protected readonly List<BridgeTile> _bridgeTiles = new();
 
         [Header("Components")]        
         
@@ -32,6 +30,8 @@ namespace Game.Character
         
         [SerializeField] private LayerMask _stepLayer;
         [SerializeField] private LayerMask _groundLayer;
+        
+        protected abstract bool HasMaxTiles();
         
         public void Collect(BridgeTile tile)
         {
@@ -93,11 +93,6 @@ namespace Game.Character
             _bridgeTiles.Remove(tile);
             
             return tile;
-        }
-        
-        private bool HasMaxTiles()
-        {
-            return _bridgeTiles.Count >= BridgeTileLimit;
         }
         
         private Vector3 GetNextTilePosition(BridgeTile tile)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.BridgeConstruction;
+using Game.Character.Animations;
 using Game.Character.StateMachine.Interfaces;
 using UnityEngine;
 
@@ -14,21 +15,25 @@ namespace Game.Character.AI.States
         private readonly Bot _bot;
         private readonly Rigidbody _rigidbody;
         private readonly BotData _botData;
+        private readonly PlayerAnimator _playerAnimator;
 
         private BridgeTile _closestTile;
 
         public BotCollectBridgeTilesState(ICharacterStateMachine stateMachine, Bot bot,
-            Rigidbody rigidbody, BotData botData)
+            Rigidbody rigidbody, BotData botData, PlayerAnimator playerAnimator)
         {
             _stateMachine = stateMachine;
             _bot = bot;
             _rigidbody = rigidbody;
             _botData = botData;
+            _playerAnimator = playerAnimator;
         }
         
         public void Enter()
         {
             SetClosestTileOrEnterIdleState();
+            
+            _playerAnimator.PlayWalkAnimation();   
         }
 
         public void Exit()
@@ -89,6 +94,12 @@ namespace Game.Character.AI.States
 
                 if (IsBotNearClosestTile())
                     SetClosestTileOrEnterIdleState();
+
+                if (!_bot.CurrentPlatform.Tiles.Contains(_closestTile))
+                    SetClosestTileOrEnterIdleState();
+
+                if (_bot.BridgeTiles.Count >= _botData.MaxTilesInHands)
+                    _stateMachine.EnterState<BotDeliverTilesToBridgeState>();
             }
         }
 

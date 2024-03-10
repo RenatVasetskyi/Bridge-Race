@@ -6,5 +6,6 @@ namespace Game.Character.AI
     public class BotData
     {
         public float Speed;
+        public int MaxTilesInHands;
     }
 }

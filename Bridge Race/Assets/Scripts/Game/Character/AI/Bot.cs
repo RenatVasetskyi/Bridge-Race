@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using Data;
+using Game.BridgeConstruction;
 using Game.Character.AI.States;
+using Game.Character.Animations;
 using Game.Character.StateMachine;
 using Game.Character.StateMachine.Interfaces;
 using Game.Generation;
@@ -13,9 +16,13 @@ namespace Game.Character.AI
     {
         private readonly ICharacterStateMachine _stateMachine = new CharacterStateMachine();
 
+        [SerializeField] private Animator _animator;
+        
         private BotData _data;
+        private PlayerAnimator _playerAnimator;
         
         public Platform CurrentPlatform { get; private set; }
+        public List<BridgeTile> BridgeTiles => _bridgeTiles; 
 
         [Inject]
         public void Construct(GameSettings gameSettings)
@@ -26,9 +33,11 @@ namespace Game.Character.AI
         public void Initialize(Platform startPlatform)
         {
             ChangeCurrentPlatform(startPlatform);
+
+            _playerAnimator = new PlayerAnimator(_animator);
             
             StateFactory stateFactory = new StateFactory
-                (_stateMachine, this, _rigidbody, _data);
+                (_stateMachine, this, _rigidbody, _data, _playerAnimator);
             
             _stateMachine.EnterState<BotCollectBridgeTilesState>();
         }
@@ -49,6 +58,11 @@ namespace Game.Character.AI
         {
             if (CurrentPlatform != null)
                 CurrentPlatform.Tiles.CollectionChanged -= IfCurrentStateIsIdleTryToEnterCollectBridgeTileState;
+        }
+        
+        protected override bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= _data.MaxTilesInHands;
         }
 
         private void ChangeCurrentPlatform(Platform platform)
@@ -81,14 +95,16 @@ namespace Game.Character.AI
             private readonly Bot _bot;
             private readonly Rigidbody _rigidbody;
             private readonly BotData _botData;
+            private readonly PlayerAnimator _animator;
 
             public StateFactory(ICharacterStateMachine stateMachine, Bot bot,
-                Rigidbody rigidbody, BotData botData) 
+                Rigidbody rigidbody, BotData botData, PlayerAnimator animator) 
             {
                 _stateMachine = stateMachine;
                 _bot = bot;
                 _rigidbody = rigidbody;
                 _botData = botData;
+                _animator = animator;
 
                 CreateStates();
             }
@@ -102,18 +118,20 @@ namespace Game.Character.AI
 
             private void CreateIdleState()
             {
-                _stateMachine.AddState<BotIdleState>(new BotIdleState());
+                _stateMachine.AddState<BotIdleState>
+                    (new BotIdleState(_animator, _rigidbody));
             }
 
             private void CreateCollectBridgeTilesState()
             {
                 _stateMachine.AddState<BotCollectBridgeTilesState>(new 
-                    BotCollectBridgeTilesState(_stateMachine, _bot, _rigidbody, _botData));
+                    BotCollectBridgeTilesState(_stateMachine, _bot, _rigidbody, _botData, _animator));
             }
 
             private void CreateDeliverTileToBridgeState()
             {
-                _stateMachine.AddState<BotDeliverTilesToBridgeState>(new BotDeliverTilesToBridgeState());   
+                _stateMachine.AddState<BotDeliverTilesToBridgeState>
+                    (new BotDeliverTilesToBridgeState(_animator));   
             }
         }
     }
