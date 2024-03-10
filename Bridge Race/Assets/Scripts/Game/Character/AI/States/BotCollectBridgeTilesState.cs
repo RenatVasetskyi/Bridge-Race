@@ -91,6 +91,8 @@ namespace Game.Character.AI.States
                 Vector3 direction = (_closestTile.transform.position - _bot.transform.position).normalized;
             
                 _rigidbody.velocity = direction * _botData.Speed;
+                
+                Rotate(direction);
 
                 if (IsBotNearClosestTile())
                     SetClosestTileOrEnterIdleState();
@@ -101,6 +103,11 @@ namespace Game.Character.AI.States
                 if (_bot.BridgeTiles.Count >= _botData.MaxTilesInHands)
                     _stateMachine.EnterState<BotDeliverTilesToBridgeState>();
             }
+        }
+
+        private void Rotate(Vector3 direction)
+        {
+            _bot.transform.rotation = Quaternion.LookRotation(direction);
         }
 
         private bool IsBotNearClosestTile()

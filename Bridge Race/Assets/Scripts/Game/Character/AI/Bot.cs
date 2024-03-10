@@ -64,7 +64,7 @@ namespace Game.Character.AI
         {
             return _bridgeTiles.Count >= _data.MaxTilesInHands;
         }
-
+        
         private void ChangeCurrentPlatform(Platform platform)
         {
             if (CurrentPlatform != null)
