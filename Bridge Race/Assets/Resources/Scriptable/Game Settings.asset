@@ -95,6 +95,7 @@ MonoBehaviour:
     MaxTilesInHands: 20
   DefaultUserPhoto: {fileID: 21300000, guid: d2c149dc33065402eaaea8b6a70a7361, type: 3}
   BotData:
-    Speed: 8
+    Speed: 10
     MaxTilesInHands: 20
-    RotationSpeed: 8
+    RotationSpeed: 10
+    StopThreshold: 0.1

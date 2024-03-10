@@ -7,6 +7,7 @@ using Game.Character.Animations;
 using Game.Character.StateMachine;
 using Game.Character.StateMachine.Interfaces;
 using Game.Generation;
+using Game.Levels;
 using UnityEngine;
 using Zenject;
 
@@ -41,6 +42,21 @@ namespace Game.Character.AI
             
             _stateMachine.EnterState<BotCollectBridgeTilesState>();
         }
+
+        public void Move(Vector3 to)
+        {
+            Vector3 direction = (to - transform.position).normalized;
+
+            _rigidbody.velocity = direction * _data.Speed;
+
+            Rotate(direction);
+        }
+        
+        public bool IsReachedPosition(Vector3 targetPosition)
+        {
+            return Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
+                new Vector3(targetPosition.x, 0, targetPosition.z)) <= _data.StopThreshold;
+        }
         
         private void Update()
         {
@@ -63,6 +79,16 @@ namespace Game.Character.AI
         protected override bool HasMaxTiles()
         {
             return _bridgeTiles.Count >= _data.MaxTilesInHands;
+        }
+        
+        private void Rotate(Vector3 direction)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            Quaternion rotation = Quaternion.Lerp(transform.rotation,
+                targetRotation, _data.RotationSpeed * Time.deltaTime);
+
+            transform.rotation = rotation;
         }
         
         private void ChangeCurrentPlatform(Platform platform)
@@ -125,13 +151,13 @@ namespace Game.Character.AI
             private void CreateCollectBridgeTilesState()
             {
                 _stateMachine.AddState<BotCollectBridgeTilesState>(new 
-                    BotCollectBridgeTilesState(_stateMachine, _bot, _rigidbody, _botData, _animator));
+                    BotCollectBridgeTilesState(_stateMachine, _bot, _botData, _animator));
             }
 
             private void CreateDeliverTileToBridgeState()
             {
                 _stateMachine.AddState<BotDeliverTilesToBridgeState>
-                    (new BotDeliverTilesToBridgeState(_animator));   
+                    (new BotDeliverTilesToBridgeState(_bot, _animator, _stateMachine, _botData));   
             }
         }
     }

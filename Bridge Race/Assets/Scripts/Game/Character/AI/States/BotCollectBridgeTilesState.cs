@@ -9,22 +9,18 @@ namespace Game.Character.AI.States
 {
     public class BotCollectBridgeTilesState : ICharacterState
     {
-        private const float StopThreshold = 0.05f;
-        
         private readonly ICharacterStateMachine _stateMachine;
         private readonly Bot _bot;
-        private readonly Rigidbody _rigidbody;
         private readonly BotData _botData;
         private readonly PlayerAnimator _playerAnimator;
 
         private BridgeTile _closestTile;
 
-        public BotCollectBridgeTilesState(ICharacterStateMachine stateMachine, Bot bot,
-            Rigidbody rigidbody, BotData botData, PlayerAnimator playerAnimator)
+        public BotCollectBridgeTilesState(ICharacterStateMachine stateMachine, Bot bot, 
+            BotData botData, PlayerAnimator playerAnimator)
         {
             _stateMachine = stateMachine;
             _bot = bot;
-            _rigidbody = rigidbody;
             _botData = botData;
             _playerAnimator = playerAnimator;
         }
@@ -88,13 +84,9 @@ namespace Game.Character.AI.States
         {
             if (_closestTile != null)
             {
-                Vector3 direction = (_closestTile.transform.position - _bot.transform.position).normalized;
-            
-                _rigidbody.velocity = direction * _botData.Speed;
-                
-                Rotate(direction);
+                _bot.Move(_closestTile.transform.position);
 
-                if (IsBotNearClosestTile())
+                if (_bot.IsReachedPosition(_closestTile.transform.position))
                     SetClosestTileOrEnterIdleState();
 
                 if (!_bot.CurrentPlatform.Tiles.Contains(_closestTile))
@@ -103,22 +95,6 @@ namespace Game.Character.AI.States
                 if (_bot.BridgeTiles.Count >= _botData.MaxTilesInHands)
                     _stateMachine.EnterState<BotDeliverTilesToBridgeState>();
             }
-        }
-
-        private void Rotate(Vector3 direction)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            Quaternion rotation = Quaternion.Lerp(_bot.transform.rotation,
-                targetRotation, _botData.RotationSpeed * Time.deltaTime);
-
-            _bot.transform.rotation = rotation;
-        }
-
-        private bool IsBotNearClosestTile()
-        {
-            return Vector3.Distance(new Vector3(_rigidbody.position.x, 0, _rigidbody.position.z),
-                new Vector3(_closestTile.transform.position.x, 0, _closestTile.transform.position.z)) <= StopThreshold;
         }
     }
 }

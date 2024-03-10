@@ -8,5 +8,6 @@ namespace Game.Character.AI
         public float Speed;
         public int MaxTilesInHands;
         public float RotationSpeed;
+        public double StopThreshold;
     }
 }

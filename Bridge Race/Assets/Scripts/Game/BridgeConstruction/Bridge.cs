@@ -4,6 +4,9 @@ namespace Game.BridgeConstruction
 {
     public class Bridge : MonoBehaviour
     {
+        public Transform Start;
+        public Transform End;
+        
         [SerializeField] private GameObject _boxCollider;
 
         [SerializeField] private Transform[] _tiles;
