@@ -58,6 +58,11 @@ namespace Game.Character.AI
                 new Vector3(targetPosition.x, 0, targetPosition.z)) <= _data.StopThreshold;
         }
         
+        public override bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= _data.MaxTilesInHands;
+        }
+        
         private void Update()
         {
             _stateMachine.ActiveState?.FrameUpdate();
@@ -75,22 +80,17 @@ namespace Game.Character.AI
             if (CurrentPlatform != null)
                 CurrentPlatform.Tiles.CollectionChanged -= IfCurrentStateIsIdleTryToEnterCollectBridgeTileState;
         }
-        
-        protected override bool HasMaxTiles()
-        {
-            return _bridgeTiles.Count >= _data.MaxTilesInHands;
-        }
-        
+
         private void Rotate(Vector3 direction)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Quaternion targetRotation = Quaternion.Euler(0f, Quaternion.LookRotation(direction).eulerAngles.y, 0f);
 
-            Quaternion rotation = Quaternion.Lerp(transform.rotation,
+            Quaternion newRotation = Quaternion.Lerp(transform.rotation,
                 targetRotation, _data.RotationSpeed * Time.deltaTime);
 
-            transform.rotation = rotation;
+            _rigidbody.rotation = newRotation;
         }
-        
+
         private void ChangeCurrentPlatform(Platform platform)
         {
             if (CurrentPlatform != null)
@@ -157,7 +157,7 @@ namespace Game.Character.AI
             private void CreateDeliverTileToBridgeState()
             {
                 _stateMachine.AddState<BotDeliverTilesToBridgeState>
-                    (new BotDeliverTilesToBridgeState(_bot, _animator, _stateMachine, _botData));   
+                    (new BotDeliverTilesToBridgeState(_bot, _animator, _stateMachine));   
             }
         }
     }

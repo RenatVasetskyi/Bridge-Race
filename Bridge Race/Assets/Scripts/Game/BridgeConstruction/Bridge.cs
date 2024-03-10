@@ -12,6 +12,8 @@ namespace Game.BridgeConstruction
         [SerializeField] private Transform[] _tiles;
 
         private int _currentColliderPosition;
+
+        public bool IsStopColliderEnabled => _boxCollider.activeInHierarchy;
         
         public void MoveColliderToNextTileOrDisable()
         {

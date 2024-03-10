@@ -26,7 +26,10 @@ namespace Game.BridgeConstruction
         {
             if (!_isUsed & other.gameObject.TryGetComponent(out IBridgeTileCollectable player))
             {
-                ExtractTileFromGenerationSlot(player);
+                if (!player.HasMaxTiles())
+                {
+                    ExtractTileFromGenerationSlot(player);   
+                }
             }
         }
 

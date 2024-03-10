@@ -10,23 +10,23 @@ namespace Game.Character.AI.States
         private readonly Bot _bot;
         private readonly PlayerAnimator _playerAnimator;
         private readonly ICharacterStateMachine _stateMachine;
-        private readonly BotData _data;
 
         private Bridge _bridgeToMove;
 
         private bool _isReachedStartBridgePosition;
 
         public BotDeliverTilesToBridgeState(Bot bot, PlayerAnimator playerAnimator,
-            ICharacterStateMachine stateMachine, BotData data)
+            ICharacterStateMachine stateMachine)
         {
             _bot = bot;
             _playerAnimator = playerAnimator;
             _stateMachine = stateMachine;
-            _data = data;
         }
         
         public void Enter()
         {
+            _isReachedStartBridgePosition = false;
+            
             _playerAnimator.PlayWalkAnimation(); 
             
             SetRandomBridge();
@@ -54,14 +54,25 @@ namespace Game.Character.AI.States
         {
             if (_bridgeToMove != null)
             {
-                // if (_bot.BridgeTiles.Count <= 0 & _bot.CurrentPlatform.Tiles.Count > 0)
+                // if (!_bridgeToMove.IsStopColliderEnabled)
                 // {
-                    
+                    // _stateMachine.EnterState<BotCollectBridgeTilesState>();
                 // }
-                // else
-                // {
+                
+                if (_bot.BridgeTiles.Count <= 0 & _bot.CurrentPlatform.Tiles.Count > 0)
+                {
+                    _bot.Move(_bridgeToMove.Start.position);
+
+                    if (_bot.IsReachedPosition(_bridgeToMove.Start.position))
+                        _stateMachine.EnterState<BotCollectBridgeTilesState>();
                     
-                // }
+                    return;
+                }
+                
+                if(_bot.BridgeTiles.Count <= 0 & _bot.CurrentPlatform.Tiles.Count <= 0)
+                {
+                    _stateMachine.EnterState<BotIdleState>();
+                }
 
                 if (_bot.IsReachedPosition(_bridgeToMove.Start.position) & !_isReachedStartBridgePosition)
                 {

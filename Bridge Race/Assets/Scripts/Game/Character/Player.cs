@@ -49,6 +49,11 @@ namespace Game.Character
             
             _inputController.Disable();
         }
+        
+        public override bool HasMaxTiles()
+        {
+            return _bridgeTiles.Count >= _data.MaxTilesInHands;
+        }
 
         private void Update()
         {
@@ -65,11 +70,6 @@ namespace Game.Character
         private void OnDestroy()
         {
             UnSubscribe();
-        }
-        
-        protected override bool HasMaxTiles()
-        {
-            return _bridgeTiles.Count >= _data.MaxTilesInHands;
         }
 
         private void Subscribe()

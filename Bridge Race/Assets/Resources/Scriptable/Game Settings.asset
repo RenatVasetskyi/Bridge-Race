@@ -92,10 +92,10 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
   PlayerData:
     Speed: 15
-    MaxTilesInHands: 20
+    MaxTilesInHands: 15
   DefaultUserPhoto: {fileID: 21300000, guid: d2c149dc33065402eaaea8b6a70a7361, type: 3}
   BotData:
     Speed: 10
-    MaxTilesInHands: 20
+    MaxTilesInHands: 15
     RotationSpeed: 10
     StopThreshold: 0.1

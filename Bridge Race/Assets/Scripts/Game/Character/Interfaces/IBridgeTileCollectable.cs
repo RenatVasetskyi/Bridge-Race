@@ -6,5 +6,6 @@ namespace Game.Character.Interfaces
     {
         void Collect(BridgeTile tile);
         BridgeTile ExtractTile();
+        bool HasMaxTiles();
     }
 }

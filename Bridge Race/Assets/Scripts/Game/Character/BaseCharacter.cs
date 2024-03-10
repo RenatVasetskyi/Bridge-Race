@@ -31,7 +31,7 @@ namespace Game.Character
         [SerializeField] private LayerMask _stepLayer;
         [SerializeField] private LayerMask _groundLayer;
         
-        protected abstract bool HasMaxTiles();
+        public abstract bool HasMaxTiles();
         
         public void Collect(BridgeTile tile)
         {
